@@ -25,10 +25,10 @@ public abstract class Car {
     }
 
     public void getInformationAboutCar() {
-        System.out.println(this.brand + " | " + this.modelName + " | " + this.year + " | " + this.color + " | " + this.transmissionType + " | " + this.horsepower + " | " + this.price);
+        System.out.println(brand + " | " + this.modelName + " | " + this.year + " | " + this.color + " | " + this.transmissionType + " | " + this.horsepower + " | " + this.price);
     }
 
     public void outdatedCars() {
-        System.out.println(this.brand + ", " + this.modelName + ";");
+        System.out.println(brand + ", " + this.modelName + ";");
     }
 }
