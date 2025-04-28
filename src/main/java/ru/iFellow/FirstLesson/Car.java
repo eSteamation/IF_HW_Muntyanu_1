@@ -1,4 +1,4 @@
-package ru.iFellow;
+package ru.iFellow.FirstLesson;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package ru.iFellow;
+package ru.iFellow.FirstLesson;
 
 import java.util.Comparator;
 import java.util.List;
