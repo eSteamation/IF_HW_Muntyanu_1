@@ -16,31 +16,34 @@ public class MainTest extends WebHook {
     private final SelenideElement projectsRapid = $x("//div[@id='project_current']//li[@id='admin_main_proj_link']").as("Раздел 'Тесты'");
     private final SelenideElement taskFilter = $x("//button[contains(@class, 'subnavigator-trigger')]").as("Переключить фильтр");
     private final SelenideElement taskFilterAll = $x("//a[@data-item-id='allissues']").as("Все задачи");
-    private final SelenideElement taskCounter = $x("//div[@class='showing']/child::span");
-    private final SelenideElement taskNew = $x("//a[@id='create_link']");
-    private final SelenideElement topicField = $x("//input[@id='summary']");
-    private final SelenideElement topicCommit = $x("//input[@id='create-issue-submit']");
-    private final SelenideElement issuesAll = $x("//div[@id=\"full-issue-navigator\"]/child::a");
-    private final SelenideElement searcherQuery = $x("//input[@id='searcher-query']");
-    private final SelenideElement searchCommit = $x("//button[@class='aui-button aui-button-primary search-button']");
-    private final SelenideElement statusCheck = $x("//span[@id='status-val']/child::span");
-    private final SelenideElement versionCheck = $x("//span[@id='fixVersions-field']/a");
-    private final SelenideElement descriptionField = $x("//iframe[@id='mce_0_ifr']");
-    private final SelenideElement versionSelect = $x("//select[@id='fixVersions']");
-    private final SelenideElement modeSelect = $x("//li[@data-mode='wysiwyg']/button");
-    private final SelenideElement tagField = $x("//div[@id='labels-multi-select']");
-    private final SelenideElement tagSuggest = $x("//div[@id='labels-multi-select']/span");
-    private final SelenideElement tagSelectBugFix = $x("//li[starts-with(@id, 'bugfix-')]/a");
-    private final SelenideElement descriptionInput = $x("//body[@id='tinymce']");
-    private final SelenideElement issueSuggest = $x("//div[@id='issuelinks-issues-multi-select']/span");
-    private final SelenideElement issueSelect = $x("//li[starts-with(@id, 'test-121544')]/a");
-    private final SelenideElement epicSuggest = $x("//div[@id='customfield_10100-single-select']/span");
-    private final SelenideElement epicSelect = $x("//li[starts-with(@id, '06/jul/19-3:25')]/descendant::span[text()='TEST-174476)']");
-    private final SelenideElement sprintSuggest = $x("//div[@id='js-customfield_10104-ss-container']");
-    private final SelenideElement sprintSelect = $x("//li[starts-with(@id, 'доска-спринт-1')]/a");
-    private final SelenideElement quickSearchInput = $x("//input[@id='quickSearchInput']");
-    private final SelenideElement issueCompleted = $x("//aui-item-link[@class='issueaction-workflow-transition']");
-    private final SelenideElement issueTransition = $x("//a[@id='opsbar-transitions_more']/child::span");
+    private final SelenideElement taskCounter = $x("//div[@class='showing']/child::span").as("Счетчик задач");
+    private final SelenideElement taskNew = $x("//a[@id='create_link']").as("Новая задача");
+    private final SelenideElement topicField = $x("//input[@id='summary']").as("Тема задачи");
+    private final SelenideElement topicCommit = $x("//input[@id='create-issue-submit']").as("Создать задачу");
+    private final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи");
+    private final SelenideElement searcherQuery = $x("//input[@id='searcher-query']").as("Поисковая строка");
+    private final SelenideElement searchCommit = $x("//button[@class='aui-button aui-button-primary search-button']").as("Поиск");
+    private final SelenideElement statusCheck = $x("//span[@id='status-val']/child::span").as("Проверка статуса");
+    private final SelenideElement versionCheck = $x("//span[@id='fixVersions-field']/a").as("Проверка версии");
+    private final SelenideElement descriptionField = $x("//iframe[@id='mce_0_ifr']").as("Описание");
+    private final SelenideElement versionSelect = $x("//select[@id='fixVersions']").as("Выбор версии");
+    private final SelenideElement modeSelect = $x("//li[@data-mode='wysiwyg']/button").as("Выбор формата");
+    private final SelenideElement tagField = $x("//div[@id='labels-multi-select']").as("Поле для тегов");
+    private final SelenideElement tagSuggest = $x("//div[@id='labels-multi-select']/span").as("Выпадающее окно тегов");
+    private final SelenideElement tagSelectBugFix = $x("//li[starts-with(@id, 'bugfix-')]/a").as("Кнопка тега");
+    private final SelenideElement descriptionInput = $x("//body[@id='tinymce']").as("Ввод описания");
+    private final SelenideElement issueSuggest = $x("//div[@id='issuelinks-issues-multi-select']/span").as("Выпадающее окно задач");
+    private final SelenideElement issueSelect = $x("//li[starts-with(@id, 'test-121544')]/a").as("Выбор задачи");
+    private final SelenideElement epicSuggest = $x("//div[@id='customfield_10100-single-select']/span").as("Выпадающее окно эпиков");
+    private final SelenideElement epicSelect = $x("//li[starts-with(@id, '06/jul/19-3:25')]/descendant::span[text()='TEST-174476)']").as("Выбор эпика");
+    private final SelenideElement sprintSuggest = $x("//div[@id='js-customfield_10104-ss-container']").as("Выпадающее окно спринта");
+    private final SelenideElement sprintSelect = $x("//li[starts-with(@id, 'доска-спринт-1')]/a").as("Выбор спринта");
+    private final SelenideElement quickSearchInput = $x("//input[@id='quickSearchInput']").as("Быстрый поиск");
+    private final SelenideElement issueCompleted = $x("//aui-item-link[@id='action_id_31']").as("Выполнено");
+    private final SelenideElement issueFinished = $x("//aui-item-link[@id='action_id_51']").as("Исполнено");
+    private final SelenideElement issueFinishedSubmit = $x("//input[@name='Transition']").as("Исполнено");
+    private final SelenideElement issueTransition = $x("//a[@id='opsbar-transitions_more']/child::span").as("Бизнес-процесс");
+    private final SelenideElement issueInWork = $x("//a[@id='action_id_21']").as("В работе");
 
 
 
@@ -72,7 +75,7 @@ public class MainTest extends WebHook {
         loginCommit.click();
         assertTrue(projectsTest.isDisplayed());
         projectsTest.click();
-        Selenide.sleep(1000);
+        Selenide.sleep(1000); //Поскольку в задании указано использовать assert вместо shouldBe, я использую sleep для поддержки assertTrue проверок которые слишком торопятся
         assertTrue(projectsRapid.isDisplayed());
         projectsRapid.click();
     }
@@ -246,6 +249,18 @@ public class MainTest extends WebHook {
         Selenide.sleep(1000);
         quickSearchInput.setValue("HW" + (caseNumber + 1)).pressEnter();
         Selenide.sleep(1000);
+        assertTrue(issueInWork.isDisplayed());
+        issueInWork.click();
+        Selenide.sleep(500);
+        assertTrue(issueTransition.isDisplayed());
+        issueTransition.click();
+        Selenide.sleep(500);
+        assertTrue(issueFinished.isDisplayed());
+        issueFinished.click();
+        Selenide.sleep(500);
+        assertTrue(issueFinishedSubmit.isDisplayed());
+        issueFinishedSubmit.click();
+        Selenide.sleep(500);
         assertTrue(issueTransition.isDisplayed());
         issueTransition.click();
         Selenide.sleep(500);
