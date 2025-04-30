@@ -15,7 +15,6 @@ public class WebHook {
         open("");
         getWebDriver().manage().window().maximize();
         Configuration.timeout = 10000;
-        //Configuration.holdBrowserOpen = true; //для более удобного дебаггинга
     }
 
     @AfterEach
