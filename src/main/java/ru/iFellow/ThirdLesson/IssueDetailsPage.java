@@ -17,7 +17,7 @@ public class IssueDetailsPage {
     protected final SelenideElement issueInWork = $x("//a[@id='action_id_21']").as("В работе");
     protected final SelenideElement issueTransition = $x("//a[@id='opsbar-transitions_more']").as("Бизнес-процесс");
     protected final SelenideElement issueFinished = $x("//aui-item-link[@id='action_id_51']/a").as("Исполнено");
-    protected final SelenideElement issueFinishedSubmit = $x("//input[@name='Transition']").as("Исполнено");
+    protected final SelenideElement issueFinishedSubmit = $x("//input[@name='Transition']").as("Исполнено подтвердить");
     protected final SelenideElement issueCompleted = $x("//aui-item-link[@id='action_id_31']").as("Выполнено");
     protected final SelenideElement loader = $x("//div[@class='jira-spinner-container']").as("Загрузка страницы");
     protected final SelenideElement loaderCreateIssue = $x("//div[@class='aui-spinner spinner']").as("Выход из генератора");

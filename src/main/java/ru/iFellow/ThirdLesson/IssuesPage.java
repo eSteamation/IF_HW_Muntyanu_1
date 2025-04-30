@@ -8,10 +8,10 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class IssuesPage {
     protected final SelenideElement taskFilter = $x("//button[contains(@class, 'subnavigator-trigger')]").as("Переключить фильтр");
-    protected final SelenideElement taskFilterAll = $x("//a[@data-item-id='allissues']").as("Все задачи");
+    protected final SelenideElement taskFilterAll = $x("//a[@data-item-id='allissues']").as("Все задачи, фильтр");
     protected final SelenideElement taskCounter = $x("//div[@class='showing']/child::span").as("Счетчик задач");
     protected final SelenideElement taskNew = $x("//a[@id='create_link']").as("Генератор задач");
-    protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи");
+    protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи, навигатор");
 
 
     public int issuesCount() {
