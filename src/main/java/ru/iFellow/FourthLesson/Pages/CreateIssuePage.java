@@ -1,11 +1,11 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.FourthLesson.Pages;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class CreateIssuePage {
     protected final SelenideElement topicField = $x("//input[@id='summary']").as("Тема задачи");
@@ -31,10 +31,10 @@ public class CreateIssuePage {
     }
 
     public void issueCheck() {
-        UtilsWait.waitFor(visibilityOf(modeSelect));
-        UtilsWait.waitFor(visibilityOf(topicField));
-        UtilsWait.waitFor(visibilityOf(versionSelect));
-        UtilsWait.waitFor(visibilityOf(topicCommit));
+        modeSelect.shouldBe(visible);
+        topicField.shouldBe(visible);
+        versionSelect.shouldBe(visible);
+        topicCommit.shouldBe(visible);
     }
 
 
@@ -42,28 +42,28 @@ public class CreateIssuePage {
         issueCheck();
         modeSelect.click();
         topicField.setValue(summary);
-        UtilsWait.waitFor(visibilityOf(descriptionField));
+        descriptionField.shouldBe(interactable);
         descriptionField.click();
         Selenide.switchTo().frame(descriptionField);
         descriptionInput.setValue(description);
         Selenide.switchTo().defaultContent();
         versionSelect.selectOptionByValue("10001");
         tagField.scrollIntoView(true);
-        UtilsWait.waitFor(visibilityOf(tagSuggest));
+        tagSuggest.shouldBe(interactable);
         tagSuggest.click();
-        UtilsWait.waitFor(visibilityOf(tagSelectBugFix));
+        tagSelectBugFix.shouldBe(interactable);
         tagSelectBugFix.click();
-        UtilsWait.waitFor(visibilityOf(issueSuggest));
+        issueSuggest.shouldBe(interactable);
         issueSuggest.click();
-        UtilsWait.waitFor(visibilityOf(issueSelect));
+        issueSelect.shouldBe(interactable);
         issueSelect.click();
-        UtilsWait.waitFor(visibilityOf(epicSuggest));
+        epicSuggest.shouldBe(interactable);
         epicSuggest.click();
-        UtilsWait.waitFor(visibilityOf(epicSelect));
+        epicSelect.shouldBe(interactable);
         epicSelect.click();
-        UtilsWait.waitFor(visibilityOf(sprintSuggest));
+        sprintSuggest.shouldBe(interactable);
         sprintSuggest.click();
-        UtilsWait.waitFor(visibilityOf(sprintSelect));
+        sprintSelect.shouldBe(interactable);
         sprintSelect.click();
         topicCommit.click();
     }

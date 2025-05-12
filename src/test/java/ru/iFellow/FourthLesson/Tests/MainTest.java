@@ -1,15 +1,15 @@
-package ru.iFellow.ThridLesson;
+package ru.iFellow.FourthLesson.Tests;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.iFellow.ThirdLesson.*;
+import ru.iFellow.FourthLesson.Pages.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MainTest extends WebHook {
+public class MainTest {
     protected final LoginPage loginPage = new LoginPage();
     protected final DashboardPage dashboardPage = new DashboardPage();
     protected final IssuesPage issuesPage = new IssuesPage();
@@ -20,7 +20,8 @@ public class MainTest extends WebHook {
     @DisplayName("Проверка входа")
     public void testStepOne() {
         loginPage.loginWait();
-        loginPage.login();
+        loginPage.loginCredentials();
+        loginPage.loginClick();
         dashboardPage.projectCheck();
         String checkUrl = WebDriverRunner.url();
         assert checkUrl != null;
@@ -43,10 +44,10 @@ public class MainTest extends WebHook {
         testStepTwo();
         issuesPage.issuesAssert();
         issuesPage.issuesShowAll();
+        int initialCount = issuesPage.issuesCount();
         issuesPage.issueNew();
         createIssuePage.issueCheck();
         createIssuePage.issueBasic("TEST-HW3");
-        int initialCount = issuesPage.issuesCount();
         issueDetailsPage.loaderIssueWait();
         Selenide.refresh();
         int newCount = issuesPage.issuesCount();

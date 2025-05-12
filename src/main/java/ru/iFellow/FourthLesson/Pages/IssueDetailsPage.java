@@ -1,12 +1,10 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.FourthLesson.Pages;
 
 import com.codeborne.selenide.SelenideElement;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOf;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+import static org.junit.Assert.assertEquals;
 
 public class IssueDetailsPage {
     protected final SelenideElement searcherQuery = $x("//input[@id='searcher-query']").as("Поисковая строка");
@@ -24,13 +22,13 @@ public class IssueDetailsPage {
     protected final SelenideElement updateSuccess = $x("//div[contains(@class, 'aui-message-success') and contains(text(), 'был обновлен')]");
 
     public void searchForIssue(String query) {
-        UtilsWait.waitFor(visibilityOf(searcherQuery));
+        searcherQuery.shouldBe(interactable);
         searcherQuery.setValue(query);
         searchCommit.click();
     }
 
     public void quickSearch(String query) {
-        UtilsWait.waitFor(visibilityOf(quickSearchInput));
+        quickSearchInput.shouldBe(interactable);
         quickSearchInput.setValue(query).pressEnter();
     }
 
@@ -42,40 +40,40 @@ public class IssueDetailsPage {
     }
 
     public void loaderIssueWait() {
-        UtilsWait.waitFor(visibilityOf(loaderCreateIssue));
-        UtilsWait.waitFor(invisibilityOf(loaderCreateIssue));
+        loaderCreateIssue.shouldBe(exist);
+        loaderCreateIssue.shouldNotBe(exist);
     }
 
     public void loaderWait() {
-        UtilsWait.waitFor(visibilityOf(loader));
-        UtilsWait.waitFor(invisibilityOf(loader));
+        loader.should(exist);
+        loader.shouldNot(exist);
     }
 
     public void issueStatus() {
-        UtilsWait.waitFor(visibilityOf(issueInWork));
+        issueInWork.shouldBe(interactable);
         issueInWork.click();
         loaderWait();
         issueUpdate();
-        UtilsWait.waitFor(visibilityOf(issueTransition));
+        issueTransition.shouldBe(interactable);
         issueTransition.click();
-        UtilsWait.waitFor(visibilityOf(issueFinished));
+        issueFinished.shouldBe(interactable);
         issueFinished.click();
-        UtilsWait.waitFor(visibilityOf(issueFinishedSubmit));
+        issueFinishedSubmit.shouldBe(interactable);
         issueFinishedSubmit.click();
-        loaderIssueWait();
-        UtilsWait.waitFor(visibilityOf(issueTransition));
+        issueUpdate();
+        issueTransition.shouldBe(interactable);
         issueTransition.click();
-        UtilsWait.waitFor(visibilityOf(issueCompleted));
+        issueCompleted.shouldBe(interactable);
         issueCompleted.click();
     }
 
     public void issueUpdate() {
-        UtilsWait.waitFor(visibilityOf(updateSuccess));
-        UtilsWait.waitFor(invisibilityOf(updateSuccess));
+        updateSuccess.should(appear);
+        updateSuccess.should(disappear);
     }
 
     public void assertSearchElements() {
-        UtilsWait.waitFor(visibilityOf(searcherQuery));
-        UtilsWait.waitFor(visibilityOf(searchCommit));
+        searcherQuery.should(visible);
+        searchCommit.shouldBe(interactable);
     }
 }

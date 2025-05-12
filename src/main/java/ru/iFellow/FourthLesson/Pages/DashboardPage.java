@@ -1,10 +1,9 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.FourthLesson.Pages;
 
 import com.codeborne.selenide.SelenideElement;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class DashboardPage {
     protected final SelenideElement projectList = $x("//a[@href='/browse/TEST']").as("Проекты");
@@ -17,6 +16,6 @@ public class DashboardPage {
     }
 
     public void projectCheck() {
-        UtilsWait.waitFor(visibilityOf(projectList));
+        projectList.shouldBe(visible);
     }
 }

@@ -1,4 +1,4 @@
-package utils;
+package ru.iFellow.FourthLesson.Utils;
 
 import java.io.InputStream;
 import java.util.Properties;

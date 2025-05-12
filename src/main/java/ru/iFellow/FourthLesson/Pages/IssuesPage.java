@@ -1,10 +1,10 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.FourthLesson.Pages;
 
 import com.codeborne.selenide.SelenideElement;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class IssuesPage {
     protected final SelenideElement taskFilter = $x("//button[contains(@class, 'subnavigator-trigger')]").as("Переключить фильтр");
@@ -12,7 +12,7 @@ public class IssuesPage {
     protected final SelenideElement taskCounter = $x("//div[@class='showing']/child::span").as("Счетчик задач");
     protected final SelenideElement taskNew = $x("//a[@id='create_link']").as("Генератор задач");
     protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи, навигатор");
-
+    protected final SelenideElement issuesSpinner = $x("//div[@data-testid='centered-spinner']").as("Подгрузка фильтра");
 
     public int issuesCount() {
         String text = taskCounter.getText();
@@ -20,24 +20,29 @@ public class IssuesPage {
     }
 
     public void issuesShowAll() {
-        UtilsWait.waitFor(visibilityOf(taskFilter));
+        taskFilter.shouldBe(interactable);
         taskFilter.click();
-        UtilsWait.waitFor(visibilityOf(taskFilterAll));
+        taskFilterAll.shouldBe(interactable);
         taskFilterAll.click();
     }
 
     public void issueNew() {
-        UtilsWait.waitFor(visibilityOf(taskNew));
+        taskNew.shouldBe(interactable);
         taskNew.click();
     }
 
+    public void issueLoader() {
+        issuesSpinner.should(exist);
+        issuesSpinner.shouldNot(exist);
+    }
+
     public void issuesAllNavigate() {
-        UtilsWait.waitFor(visibilityOf(taskNew));
+        taskNew.shouldBe(interactable);
         issuesAll.click();
     }
 
     public void issuesAssert() {
-        UtilsWait.waitFor(visibilityOf(taskFilter));
-        UtilsWait.waitFor(visibilityOf(taskNew));
+        taskFilter.shouldBe(interactable);
+        taskNew.should(interactable);
     }
 }

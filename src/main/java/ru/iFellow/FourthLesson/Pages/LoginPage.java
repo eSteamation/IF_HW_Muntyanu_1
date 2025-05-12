@@ -1,26 +1,29 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.FourthLesson.Pages;
 
 import com.codeborne.selenide.SelenideElement;
-import utils.UtilsConfig;
-import utils.UtilsWait;
+import ru.iFellow.FourthLesson.Utils.UtilsConfig;
 
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class LoginPage {
     protected final SelenideElement usernameField = $x("//input[@name='os_username']").as("Поле никнейма");
     protected final SelenideElement passwordField = $x("//input[@type='password']").as("Поле пароля");
     protected final SelenideElement loginCommit = $x("//div[@class='buttons']//input[@name='login']").as("Вход");
 
-    public void login() {
+    public void loginCredentials() {
         usernameField.setValue(UtilsConfig.getUsername());
         passwordField.setValue(UtilsConfig.getPassword());
+    }
+
+    public void loginClick() {
         loginCommit.click();
     }
 
     public void loginWait() {
-        UtilsWait.waitFor(visibilityOf(usernameField));
-        UtilsWait.waitFor(visibilityOf(passwordField));
-        UtilsWait.waitFor(visibilityOf(loginCommit));
+        usernameField.shouldBe(visible);
+        passwordField.shouldBe(visible);
+        loginCommit.shouldBe(interactable);
     }
 }
