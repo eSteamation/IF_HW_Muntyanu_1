@@ -20,7 +20,6 @@ public class EditorSteps {
     protected final IssuesPage issuesPage = new IssuesPage();
     protected final CreateIssuePage createIssuePage = new CreateIssuePage();
     protected final IssueDetailsPage issueDetailsPage = new IssueDetailsPage();
-    protected int initialCount;
     protected int newCount;
 
 
@@ -41,7 +40,7 @@ public class EditorSteps {
         issuesPage.issuesAssert();
         issuesPage.issuesShowAll();
         issuesPage.issueLoader();
-        initialCount = issuesPage.issuesCount();
+        int initialCount = issuesPage.issuesCount();
         issuesPage.issueNew();
         createIssuePage.issueCheck();
         createIssuePage.issueBasic(parameters.get("NameNew"));
@@ -57,10 +56,10 @@ public class EditorSteps {
 
     @Когда("создаем новую задачу, полностью заполненную какими-то данными")
     public void issueDetailed() {
-        newCount = issuesPage.issuesCount();
         issuesPage.issueNew();
         createIssuePage.issueDetailed("HW" + (newCount), "Im a chill little entry");
         issueDetailsPage.loaderIssueWait();
+
     }
 
     @Тогда("открываем страницу только что созданной задачи")
