@@ -14,11 +14,11 @@ public class UtilsConfig {
         }
     }
 
-    public static String getUsername() {
-        return properties.getProperty("username");
-    }
-
-    public static String getPassword() {
-        return properties.getProperty("password");
+    public static String getProperty(String key) {
+        String value = properties.getProperty(key);
+        if (value == null) {
+            throw new IllegalArgumentException("Свойство '" + key + "' не найдено в конфигурации");
+        }
+        return value;
     }
 }

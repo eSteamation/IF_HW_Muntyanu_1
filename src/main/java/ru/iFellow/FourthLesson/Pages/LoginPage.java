@@ -13,8 +13,8 @@ public class LoginPage {
     protected final SelenideElement loginCommit = $x("//div[@class='buttons']//input[@name='login']").as("Вход");
 
     public void loginCredentials() {
-        usernameField.setValue(UtilsConfig.getUsername());
-        passwordField.setValue(UtilsConfig.getPassword());
+        usernameField.setValue(UtilsConfig.getProperty("username"));
+        passwordField.setValue(UtilsConfig.getProperty("password"));
     }
 
     public void loginClick() {

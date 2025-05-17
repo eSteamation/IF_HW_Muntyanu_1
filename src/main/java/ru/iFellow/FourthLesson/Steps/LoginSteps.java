@@ -25,7 +25,7 @@ public class LoginSteps {
         loginPage.loginCredentials();
     }
 
-    @И("Нажимаем кнопку входа")
+    @И("^Нажимаем кнопку входа")
     public void loginCommit() {
         loginPage.loginClick();
     }
