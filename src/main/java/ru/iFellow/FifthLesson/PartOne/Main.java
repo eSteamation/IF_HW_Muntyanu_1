@@ -1,6 +1,8 @@
-package ru.iFellow.FifthLesson;
+package ru.iFellow.FifthLesson.PartOne;
 
 import io.restassured.path.json.JsonPath;
+import ru.iFellow.FifthLesson.PartOne.Data.CharacterData;
+import ru.iFellow.FifthLesson.PartOne.Data.EpisodeData;
 
 public class Main {
     protected static CharacterData characterData = new CharacterData();
@@ -14,7 +16,7 @@ public class Main {
         episodeData.getLastEpisodeData();
         episodeData.printLastEpisodeInfo(characterData.getNameInput());
         episodeData.episodeRequest();
-        characterData.getCharacterList(episodeData.currentEpisodeData());
+        characterData.characterGetList(episodeData.currentEpisodeData());
         characterData.lastCharacter();
         characterData.characterComparator();
     }

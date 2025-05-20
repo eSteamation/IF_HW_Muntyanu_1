@@ -1,29 +1,47 @@
-package ru.iFellow.FifthLesson;
+package ru.iFellow.FifthLesson.PartOne.Data;
 
 import com.google.common.base.Objects;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import lombok.Getter;
+import ru.iFellow.FifthLesson.PartOne.Utils.ComparisonResult;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CharacterData {
     private static final String API_URL = "https://rickandmortyapi.com/api";
     private List<String> characters;
     private JsonPath lastCharacterData;
+    private ComparisonResult resultLocation;
+    private ComparisonResult resultSpecies;
     @Getter
     private String nameInput;
+    private Scanner scanner;
     private String charOneLocation;
     private String charOneSpecies;
 
+    public CharacterData() {
+        this(new Scanner(System.in));
+    }
+
+    public CharacterData(Scanner scanner) {
+        this.scanner = scanner;
+    }
+
     public static ComparisonResult characterComparatorTest(Object obj1, Object obj2) {
-        boolean equal = Objects.equal(obj1, obj2);
-        return equal ? ComparisonResult.EQUAL : ComparisonResult.DIFFERENT;
+        try {
+            boolean equal = Objects.equal(obj1, obj2);
+            return equal ? ComparisonResult.EQUAL : ComparisonResult.DIFFERENT;
+        } catch (Exception e) {
+            return ComparisonResult.ERROR;
+        }
     }
 
     public void nameRequest() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the full name of the character:");
         this.nameInput = scanner.nextLine();
         System.out.println("Searching for character: " + nameInput);
@@ -49,16 +67,20 @@ public class CharacterData {
         characterRecorder();
         String charTwoLocation = lastCharacterData.getString("location.name");
         String charTwoSpecies = lastCharacterData.getString("species");
-        ComparisonResult result = characterComparatorTest(charOneLocation, charTwoLocation);
-        System.out.println("Результат сравнения локаций: " + result);
-        result = characterComparatorTest(charOneSpecies, charTwoSpecies);
-        System.out.println("Результат сравнения рас: " + result);
+        resultLocation = characterComparatorTest(charOneLocation, charTwoLocation);
+        System.out.println("Результат сравнения локаций: " + resultLocation);
+        resultSpecies = characterComparatorTest(charOneSpecies, charTwoSpecies);
+        System.out.println("Результат сравнения рас: " + resultSpecies);
         System.out.println("Локация первого: " + charOneLocation + "\nЛокация второго: " + charTwoLocation);
         System.out.println("Раса первого: " + charOneSpecies + "\nРаса второго: " + charTwoSpecies);
     }
 
-    public void getCharacterList(JsonPath episodeResponse) {
+    public void characterGetList(JsonPath episodeResponse) {
         this.characters = episodeResponse.getList("results[0].characters");
+    }
+
+    public void characterListVerify() {
+        assertNotNull(this.characters);
     }
 
     public void lastCharacter() {
@@ -75,8 +97,10 @@ public class CharacterData {
         System.out.println("Локация: " + lastCharacterData.getString("location.name"));
     }
 
-    public enum ComparisonResult {
-        EQUAL,
-        DIFFERENT
+    public void characterComparisonVerify() {
+        assertNotNull(resultSpecies);
+        assertNotEquals(ComparisonResult.ERROR, resultSpecies);
+        assertNotNull(resultLocation);
+        assertNotEquals(ComparisonResult.ERROR, resultLocation);
     }
 }
