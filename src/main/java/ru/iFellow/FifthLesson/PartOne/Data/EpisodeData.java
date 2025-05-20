@@ -25,9 +25,9 @@ public class EpisodeData {
 
 
     public void episodeRequest() {
-        System.out.println("Enter the full name of the character:");
+        System.out.println("Enter the full episode code (Example: S01E01):");
         this.episodeInput = scanner.nextLine();
-        System.out.println("Searching for character: " + episodeInput);
+        System.out.println("Searching for episode: " + episodeInput);
     }
 
     public JsonPath currentEpisodeData() {
