@@ -12,12 +12,12 @@ public class Hook {
 
     @BeforeEach
     public void setUpStreams() {
-        System.setOut(new PrintStream(outContent)); // Перенаправляем вывод
+        System.setOut(new PrintStream(outContent));
     }
 
     @AfterEach
     public void restoreStreams() {
-        System.setOut(originalOut); // Восстанавливаем оригинальный вывод
+        System.setOut(originalOut);
     }
 
 }

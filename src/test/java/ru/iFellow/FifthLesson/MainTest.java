@@ -17,7 +17,7 @@ public class MainTest extends Hook {
     protected CharacterData characterData = new CharacterData();
 
     @Test
-    public void testCreateUser() {
+    public void testCreateObject() {
         jsonInteractions.jsonImport("ObjectTemplate.json");
         jsonInteractions.jsonModifier("Tomato", "Eat market");
         jsonInteractions.jsonRequest("201");
