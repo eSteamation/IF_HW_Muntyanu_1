@@ -11,7 +11,7 @@ public class Hook {
     private final PrintStream originalOut = System.out;
 
     @BeforeEach
-    public void setUpStreams() {
+    public void setupStreams() {
         System.setOut(new PrintStream(outContent));
     }
 

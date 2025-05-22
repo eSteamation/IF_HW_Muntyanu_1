@@ -68,11 +68,11 @@ public class CharacterData {
         String charTwoLocation = lastCharacterData.getString("location.name");
         String charTwoSpecies = lastCharacterData.getString("species");
         resultLocation = characterComparatorTest(charOneLocation, charTwoLocation);
-        System.out.println("Результат сравнения локаций: " + resultLocation);
+        System.out.println("Location comparison result: " + resultLocation);
         resultSpecies = characterComparatorTest(charOneSpecies, charTwoSpecies);
-        System.out.println("Результат сравнения рас: " + resultSpecies);
-        System.out.println("Локация первого: " + charOneLocation + "\nЛокация второго: " + charTwoLocation);
-        System.out.println("Раса первого: " + charOneSpecies + "\nРаса второго: " + charTwoSpecies);
+        System.out.println("Species comparison result: " + resultSpecies);
+        System.out.println("Location of the first character: " + charOneLocation + "\nLocation of the second character: " + charTwoLocation);
+        System.out.println("Species of the first character: " + charOneSpecies + "\nSpecies of the second character: " + charTwoSpecies);
     }
 
     public void characterGetList(JsonPath episodeResponse) {
@@ -91,10 +91,10 @@ public class CharacterData {
                 .statusCode(200)
                 .extract()
                 .jsonPath();
-        System.out.println("Последний персонаж в эпизоде:");
-        System.out.println("Имя: " + lastCharacterData.getString("name"));
-        System.out.println("Вид: " + lastCharacterData.getString("species"));
-        System.out.println("Локация: " + lastCharacterData.getString("location.name"));
+        System.out.println("Last character in the episode:");
+        System.out.println("Name: " + lastCharacterData.getString("name"));
+        System.out.println("Species: " + lastCharacterData.getString("species"));
+        System.out.println("Location: " + lastCharacterData.getString("location.name"));
     }
 
     public void characterComparisonVerify() {

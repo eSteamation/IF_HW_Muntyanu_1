@@ -55,9 +55,9 @@ public class EpisodeData {
     }
 
     public void printLastEpisodeInfo(String characterName) {
-        System.out.println("Последний эпизод с: " + characterName);
-        System.out.println("Название: " + lastEpisodeData.getString("name"));
-        System.out.println("Эпизод: " + lastEpisodeData.getString("episode"));
+        System.out.println("Last episode with: " + characterName);
+        System.out.println("Episode name: " + lastEpisodeData.getString("name"));
+        System.out.println("Episode code: " + lastEpisodeData.getString("episode"));
     }
 
     public void episodeVerify() {
