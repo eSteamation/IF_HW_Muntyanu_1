@@ -24,7 +24,7 @@ public class JsonInteractions {
     }
 
     public void setup() {
-        RestAssured.baseURI = utils.ConfigReader.getProperty("API_LINK");
+        RestAssured.baseURI = utils.ConfigReader.getProperty("API_JSON");
         API_KEY = utils.ConfigReader.getProperty("API_KEY");
     }
 

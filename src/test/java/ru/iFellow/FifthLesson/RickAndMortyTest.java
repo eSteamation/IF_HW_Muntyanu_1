@@ -1,32 +1,21 @@
 package ru.iFellow.FifthLesson;
 
 import io.restassured.path.json.JsonPath;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.iFellow.FifthLesson.Hook.Hook;
 import ru.iFellow.FifthLesson.PartOne.Data.CharacterData;
 import ru.iFellow.FifthLesson.PartOne.Data.EpisodeData;
-import ru.iFellow.FifthLesson.PartTwo.JsonInteractions;
-import utils.MockScanner;
 
 import java.util.Scanner;
 
-
-public class MainTest extends Hook {
-    protected JsonInteractions jsonInteractions = new JsonInteractions();
+public class RickAndMortyTest {
     protected EpisodeData episodeData = new EpisodeData();
     protected CharacterData characterData = new CharacterData();
 
     @Test
-    public void testCreateObject() {
-        jsonInteractions.jsonImport("ObjectTemplate.json");
-        jsonInteractions.jsonModifier("Tomato", "Eat market");
-        jsonInteractions.jsonRequest("201");
-        jsonInteractions.jsonVerify("Tomato", "Eat market");
-    }
-
-    @Test
+    @DisplayName("Поиск и пулл последнего эпизода у выбранного персонажа")
     public void testRickAndMortyByCharacter() {
-        Scanner mockScanner = MockScanner.createMockScanner("Morty Smith");
+        Scanner mockScanner = utils.MockScanner.createMockScanner("Morty Smith");
         characterData = new CharacterData(mockScanner);
         characterData.nameRequest();
         JsonPath characterResponse = characterData.currentCharacterData();
@@ -34,22 +23,26 @@ public class MainTest extends Hook {
         characterData.characterRecorder();
         episodeData.getLastEpisodeData();
         episodeData.episodeVerify();
+        episodeData.logLastEpisodeInfo();
     }
 
     @Test
+    @DisplayName("Поиск и пулл последнего персонажа из выбранного эпизода")
     public void testRickAndMortyByEpisode() {
-        Scanner mockScanner = MockScanner.createMockScanner("S05E10");
+        Scanner mockScanner = utils.MockScanner.createMockScanner("S05E10");
         episodeData = new EpisodeData(mockScanner);
         episodeData.episodeRequest();
         characterData.characterGetList(episodeData.currentEpisodeData());
         characterData.characterListVerify();
+        characterData.lastCharacter();
+        characterData.logLastCharacterInfo();
     }
 
     @Test
+    @DisplayName("Сравнение персонажей")
     public void testRickAndMortyCompareCharacters() {
         testRickAndMortyByCharacter();
         testRickAndMortyByEpisode();
-        characterData.lastCharacter();
         characterData.characterComparator();
         characterData.characterComparisonVerify();
     }

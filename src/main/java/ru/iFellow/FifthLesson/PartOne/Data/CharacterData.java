@@ -1,9 +1,12 @@
 package ru.iFellow.FifthLesson.PartOne.Data;
 
 import com.google.common.base.Objects;
+import groovy.util.logging.Slf4j;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import lombok.Getter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.iFellow.FifthLesson.PartOne.Utils.ComparisonResult;
 
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Slf4j
 public class CharacterData {
-    private static final String API_URL = "https://rickandmortyapi.com/api";
+
+    private static final String API_URL = "";
     private List<String> characters;
     private JsonPath lastCharacterData;
     private ComparisonResult resultLocation;
@@ -23,6 +28,7 @@ public class CharacterData {
     private Scanner scanner;
     private String charOneLocation;
     private String charOneSpecies;
+    private static final Logger logger = LoggerFactory.getLogger(CharacterData.class);
 
     public CharacterData() {
         this(new Scanner(System.in));
@@ -30,6 +36,10 @@ public class CharacterData {
 
     public CharacterData(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    public void setup() {
+        RestAssured.baseURI = utils.ConfigReader.getProperty("API_RNM");
     }
 
     public static ComparisonResult characterComparatorTest(Object obj1, Object obj2) {
@@ -42,9 +52,10 @@ public class CharacterData {
     }
 
     public void nameRequest() {
-        System.out.println("Enter the full name of the character:");
+        setup();
+        logger.info("Asks for the full name of the character");
         this.nameInput = scanner.nextLine();
-        System.out.println("Searching for character: " + nameInput);
+        logger.info("Searching for the character: {}", nameInput);
     }
 
     public JsonPath currentCharacterData() {
@@ -68,11 +79,11 @@ public class CharacterData {
         String charTwoLocation = lastCharacterData.getString("location.name");
         String charTwoSpecies = lastCharacterData.getString("species");
         resultLocation = characterComparatorTest(charOneLocation, charTwoLocation);
-        System.out.println("Location comparison result: " + resultLocation);
+        logger.info("Location comparison result: {}", resultLocation);
         resultSpecies = characterComparatorTest(charOneSpecies, charTwoSpecies);
-        System.out.println("Species comparison result: " + resultSpecies);
-        System.out.println("Location of the first character: " + charOneLocation + "\nLocation of the second character: " + charTwoLocation);
-        System.out.println("Species of the first character: " + charOneSpecies + "\nSpecies of the second character: " + charTwoSpecies);
+        logger.info("Species comparison result: {}", resultSpecies);
+        logger.info("Location of the first character: {}\nLocation of the second character: {}", charOneLocation, charTwoLocation);
+        logger.info("Species of the first character: {}\nSpecies of the second character: {}", charOneSpecies, charTwoSpecies);
     }
 
     public void characterGetList(JsonPath episodeResponse) {
@@ -91,10 +102,6 @@ public class CharacterData {
                 .statusCode(200)
                 .extract()
                 .jsonPath();
-        System.out.println("Last character in the episode:");
-        System.out.println("Name: " + lastCharacterData.getString("name"));
-        System.out.println("Species: " + lastCharacterData.getString("species"));
-        System.out.println("Location: " + lastCharacterData.getString("location.name"));
     }
 
     public void characterComparisonVerify() {
@@ -103,4 +110,12 @@ public class CharacterData {
         assertNotNull(resultLocation);
         assertNotEquals(ComparisonResult.ERROR, resultLocation);
     }
+
+    public void logLastCharacterInfo() {
+        logger.info("Last character in the episode:");
+        logger.info("Name: {}", lastCharacterData.getString("name"));
+        logger.info("Species: {}", lastCharacterData.getString("species"));
+        logger.info("Location: {}", lastCharacterData.getString("location.name"));
+    }
 }
+

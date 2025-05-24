@@ -1,19 +1,24 @@
 package ru.iFellow.FifthLesson.PartOne.Data;
 
+import groovy.util.logging.Slf4j;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+@Slf4j
 public class EpisodeData {
     private static final String API_URL = "https://rickandmortyapi.com/api";
     private Scanner scanner;
     private String episodeInput;
     private List<String> episodes;
     private JsonPath lastEpisodeData;
+    private static final Logger logger = LoggerFactory.getLogger(EpisodeData.class);
 
     public EpisodeData(Scanner scanner) {
         this.scanner = scanner;
@@ -23,11 +28,10 @@ public class EpisodeData {
         this(new Scanner(System.in));
     }
 
-
     public void episodeRequest() {
-        System.out.println("Enter the full episode code (Example: S01E01):");
+        logger.info("Asking for the full episode code.");
         this.episodeInput = scanner.nextLine();
-        System.out.println("Searching for episode: " + episodeInput);
+        logger.info("Searching for episode: {}", episodeInput);
     }
 
     public JsonPath currentEpisodeData() {
@@ -54,10 +58,10 @@ public class EpisodeData {
                 .jsonPath();
     }
 
-    public void printLastEpisodeInfo(String characterName) {
-        System.out.println("Last episode with: " + characterName);
-        System.out.println("Episode name: " + lastEpisodeData.getString("name"));
-        System.out.println("Episode code: " + lastEpisodeData.getString("episode"));
+    public void logLastEpisodeInfo() {
+        logger.info("Last episode with selected character");
+        logger.info("Episode name: {}", lastEpisodeData.getString("name"));
+        logger.info("Episode code: {}", lastEpisodeData.getString("episode"));
     }
 
     public void episodeVerify() {
