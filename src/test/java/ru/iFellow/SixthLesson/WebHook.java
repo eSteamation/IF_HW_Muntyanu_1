@@ -33,6 +33,7 @@ public class WebHook {
     @AfterAll
     static void generateAllureReport() {
         AllureReport.generateReport();
+        AllureReport.openAllureReport();
         SelenideLogger.removeAllListeners();
     }
 

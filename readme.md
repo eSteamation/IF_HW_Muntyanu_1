@@ -20,33 +20,10 @@
 
 Необходимо добавить их %_framework_name_%/bin/ в PATH.
 
-# Потенциальные проблемы \ изменения
+# Что проверяют тесты
 
-Можно использовать следующий код (**вместо** существующего) в AllureReportService для того, чтобы отчет открывался сразу
-же по завершению тестов, но он всегда приводит к тому, что отчет добавляет лишнюю ошибку, не связанную с тестами. Найти
-решение этой проблеме я еще не успел. mvn clean test allure::serve так же открывает две инстанции репорта в этом случае.
-
-```
-    public static void generateReport() {
-        Configuration configuration = ConfigurationBuilder.bundled().build();
-//        List<Path> sourcePaths = new ArrayList<>();
-
-
-        Path sourcePath = Paths.get("target/allure-results");
-        Path destinationPath = Paths.get("target/allure-report");
-//        sourcePaths.add(sourcePath);
-
-        new ReportGenerator(configuration).generateSingleFile(destinationPath, sourcePath);
-    }
-
-
-    public static void openAllureReport() {
-        try {
-            File report = new File("target/allure-report/index.html");
-
-                Desktop.getDesktop().browse(report.toURI());
-
-            } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-```
+- Систему входа
+- Редактор задач
+- Генератор задач
+- Поиск
+- Работа фильтров
