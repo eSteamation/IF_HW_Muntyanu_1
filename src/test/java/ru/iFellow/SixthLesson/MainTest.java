@@ -76,7 +76,7 @@ public class MainTest extends WebHook {
         step("Создание задачи", () -> {
             issuesPage.issueNew();
             createIssuePage.issueCheck();
-            createIssuePage.issueBasic("TEST-HW3");
+            createIssuePage.issueBasic("TEST-HW1111113");
             issueDetailsPage.loaderIssueWait();
             step("Обновление страницы для обновления счетчика", Selenide::refresh);
             issuesPage.issueLoader();
