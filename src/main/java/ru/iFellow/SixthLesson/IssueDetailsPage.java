@@ -25,7 +25,7 @@ public class IssueDetailsPage {
 
     public void searchForIssue(String query) {
         step("Поиск должен быть доступен", () -> searcherQuery.shouldBe(interactable));
-        step("Ищем задачу {query}", () -> {
+        step("Ищем задачу " + query, () -> {
             searcherQuery.setValue(query);
             searchCommit.click();
         });
@@ -33,13 +33,13 @@ public class IssueDetailsPage {
 
     public void quickSearch(String query) {
         step("Быстрый поиск должен быть доступен", () -> quickSearchInput.shouldBe(interactable));
-        step("Ищем задачу {query}", () -> quickSearchInput.setValue(query).pressEnter());
+        step("Ищем задачу " + query, () -> quickSearchInput.setValue(query).pressEnter());
     }
 
     public void issueVerify(String expectedStatus, String expectedVersion) {
-        step("Проверяем статус задачи '{expected status}'", () -> assertEquals(expectedStatus, statusCheck.getText()));
+        step("Проверяем статус задачи " + expectedStatus, () -> assertEquals(expectedStatus, statusCheck.getText()));
         if (expectedVersion != null) {
-            step("Проверяем версию задачи '{expected version}'", () -> assertEquals(expectedVersion, versionCheck.getText()));
+            step("Проверяем версию задачи " + expectedVersion, () -> assertEquals(expectedVersion, versionCheck.getText()));
         }
     }
 

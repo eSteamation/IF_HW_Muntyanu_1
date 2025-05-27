@@ -14,10 +14,13 @@ public class IssuesPage {
     protected final SelenideElement taskNew = $x("//a[@id='create_link']").as("Генератор задач");
     protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи, навигатор");
     protected final SelenideElement issuesSpinner = $x("//div[@class='loading']").as("Подгрузка фильтра");
+    protected String text;
 
     @Step("Взятие значения счетчика задач")
     public int issuesCount() {
-        String text = taskCounter.getText();
+        step("Взятие значения счетчика задач", () -> {
+            text = taskCounter.getText();
+        });
         return Integer.parseInt(text.split(" из ")[1]);
     }
 
@@ -37,8 +40,10 @@ public class IssuesPage {
 
     @Step("Ожидание загрузки страницы")
     public void issueLoader() {
-        issuesSpinner.should(exist);
-        issuesSpinner.should(disappear);
+        step("Ожидание загрузки страницы", () -> {
+            issuesSpinner.should(exist);
+            issuesSpinner.should(disappear);
+        });
     }
 
     @Step("Посмотреть все задачи и фильтры")

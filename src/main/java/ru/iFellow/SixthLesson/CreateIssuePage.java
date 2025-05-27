@@ -2,7 +2,6 @@ package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
-import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.interactable;
@@ -10,7 +9,6 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 import static io.qameta.allure.Allure.step;
 
-@Feature("Создание задачи")
 public class CreateIssuePage {
     protected final SelenideElement topicField = $x("//input[@id='summary']").as("Тема задачи");
     protected final SelenideElement topicCommit = $x("//input[@id='create-issue-submit']").as("Создать задачу");

@@ -5,7 +5,6 @@ import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import utils.UtilsConfig;
 
 import static io.qameta.allure.Allure.step;
@@ -16,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @Feature("Управление задачами")
 @Owner("Steam")
 @Severity(SeverityLevel.CRITICAL)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MainTest extends WebHook {
     protected final LoginPage loginPage = new LoginPage();
     protected final DashboardPage dashboardPage = new DashboardPage();
@@ -70,13 +68,13 @@ public class MainTest extends WebHook {
             issuesPage.issuesAssert();
             issuesPage.issuesShowAll();
             issuesPage.issueLoader();
-            initialCount = issuesPage.issuesCount();
         });
         step("Создание задачи", () -> {
             issuesPage.issueNew();
             createIssuePage.issueCheck();
             createIssuePage.issueBasic("TEST-HW6");
             issueDetailsPage.loaderIssueWait();
+            initialCount = issuesPage.issuesCount();
             step("Обновление страницы для обновления счетчика", Selenide::refresh);
             issuesPage.issueLoader();
             newCount = issuesPage.issuesCount();
