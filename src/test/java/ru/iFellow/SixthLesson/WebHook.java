@@ -1,4 +1,4 @@
-package ru.iFellow.ThridLesson;
+package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
@@ -17,7 +17,7 @@ public class WebHook {
     static void setupAllure() {
         AllureSelenide allureSelenide = new AllureSelenide()
                 .screenshots(true)
-                .savePageSource(false);
+                .savePageSource(true);
         SelenideLogger.addListener("AllureSelenide", allureSelenide);
     }
 

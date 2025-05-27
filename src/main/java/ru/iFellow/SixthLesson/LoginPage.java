@@ -1,13 +1,13 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import utils.UtilsConfig;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 import static io.qameta.allure.Allure.step;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class LoginPage {
     protected final SelenideElement usernameField = $x("//input[@name='os_username']").as("Поле ввода логина");
@@ -23,8 +23,8 @@ public class LoginPage {
 
     @Step("Ожидание элементов формы входа")
     public void loginWait() {
-        step("Ожидание поля логина", () -> UtilsWait.waitFor(visibilityOf(usernameField)));
-        step("Ожидание поля пароля", () -> UtilsWait.waitFor(visibilityOf(passwordField)));
-        step("Ожидание кнопки входа", () -> UtilsWait.waitFor(visibilityOf(loginCommit)));
+        step("Ожидание поля логина", () -> usernameField.shouldBe(visible));
+        step("Ожидание поля пароля", () -> passwordField.shouldBe(visible));
+        step("Ожидание кнопки входа", () -> loginCommit.shouldBe(interactable));
     }
 }

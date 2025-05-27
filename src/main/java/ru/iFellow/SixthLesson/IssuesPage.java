@@ -1,12 +1,12 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.exist;
+import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Selenide.$x;
 import static io.qameta.allure.Allure.step;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 public class IssuesPage {
     protected final SelenideElement taskFilter = $x("//button[contains(@class, 'subnavigator-trigger')]").as("Переключить фильтр");
@@ -14,6 +14,7 @@ public class IssuesPage {
     protected final SelenideElement taskCounter = $x("//div[@class='showing']/child::span").as("Счетчик задач");
     protected final SelenideElement taskNew = $x("//a[@id='create_link']").as("Генератор задач");
     protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи, навигатор");
+    protected final SelenideElement issuesSpinner = $x("//div[@class='loading']").as("Подгрузка фильтра");
 
     @Step("Взятие значения счетчика задач")
     public int issuesCount() {
@@ -23,27 +24,33 @@ public class IssuesPage {
 
     @Step("Переключение фильтра в режим 'Все задачи'")
     public void issuesShowAll() {
-        step("Проверка видимости переключателя фильтра", () -> UtilsWait.waitFor(visibilityOf(taskFilter)));
+        step("Проверка видимости переключателя фильтра", () -> taskFilter.shouldBe(interactable));
         step("Нажатие кнопки 'Переключить фильтр'", () -> taskFilter.click());
-        step("Проверка видимости выбора 'Все задачи'", () -> UtilsWait.waitFor(visibilityOf(taskFilterAll)));
+        step("Проверка видимости выбора 'Все задачи'", () -> taskFilterAll.shouldBe(interactable));
         step("Подтверждение выбора 'Все задачи'", () -> taskFilterAll.click());
     }
 
     @Step("Создание новой задачи")
     public void issueNew() {
-        step("Проверка видимости генератора задач", () -> UtilsWait.waitFor(visibilityOf(taskNew)));
+        step("Проверка видимости генератора задач", () -> taskNew.shouldBe(interactable));
         step("Переход в создание задачи", () -> taskNew.click());
+    }
+
+    @Step("Ожидание загрузки страницы")
+    public void issueLoader() {
+        issuesSpinner.should(exist);
+        issuesSpinner.shouldNot(exist);
     }
 
     @Step("Посмотреть все задачи и фильтры")
     public void issuesAllNavigate() {
-        UtilsWait.waitFor(visibilityOf(taskNew));
+        taskNew.shouldBe(interactable);
         issuesAll.click();
     }
 
     @Step("Проверка")
     public void issuesAssert() {
-        UtilsWait.waitFor(visibilityOf(taskFilter));
-        UtilsWait.waitFor(visibilityOf(taskNew));
+        taskFilter.shouldBe(interactable);
+        taskNew.shouldBe(interactable);
     }
 }

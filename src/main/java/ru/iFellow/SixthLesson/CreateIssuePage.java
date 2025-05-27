@@ -1,14 +1,14 @@
-package ru.iFellow.ThirdLesson;
+package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
-import utils.UtilsWait;
 
+import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
 @Feature("Создание задачи")
 public class CreateIssuePage {
@@ -37,20 +37,20 @@ public class CreateIssuePage {
 
     @Step("Проверка видимости полей")
     public void issueCheck() {
-        step("Ожидание элемента выбора формата", () -> UtilsWait.waitFor(visibilityOf(modeSelect)));
-        step("Ожидание поля темы", () -> UtilsWait.waitFor(visibilityOf(topicField)));
-        step("Ожидание выбора версии", () -> UtilsWait.waitFor(visibilityOf(versionSelect)));
-        step("Ожидание кнопки подтверждения", () -> UtilsWait.waitFor(visibilityOf(topicCommit)));
+        step("Ожидание элемента выбора формата", () -> modeSelect.shouldBe(visible));
+        step("Ожидание поля темы", () -> topicField.shouldBe(visible));
+        step("Ожидание выбора версии", () -> versionSelect.shouldBe(visible));
+        step("Ожидание кнопки подтверждения", () -> topicCommit.shouldBe(visible));
     }
 
-    @Step("Детализированное создание задачи c темой '{summary}'")
+    @Step("Детализированное создание задачи c темой формата 'HW + порядковый номер'")
     public void issueDetailed(String summary, String description) {
         issueCheck();
         step("Переход в текстовый формат", () -> modeSelect.click());
         step("Ввод темы задачи: " + summary, () -> topicField.setValue(summary));
         step("Ввод описания задачи", () ->
         {
-            UtilsWait.waitFor(visibilityOf(descriptionField));
+            descriptionField.shouldBe(interactable);
             descriptionField.click();
             Selenide.switchTo().frame(descriptionField);
             descriptionInput.setValue(description);
@@ -59,27 +59,27 @@ public class CreateIssuePage {
         step("Выбор версии", () -> versionSelect.selectOptionByValue("10001"));
         step("Добавление тега Bugfix", () -> {
             tagField.scrollIntoView(true);
-            UtilsWait.waitFor(visibilityOf(tagSuggest));
+            tagSuggest.shouldBe(interactable);
             tagSuggest.click();
-            UtilsWait.waitFor(visibilityOf(tagSelectBugFix));
+            tagSelectBugFix.shouldBe(interactable);
             tagSelectBugFix.click();
         });
         step("Привязка связанной задачи", () -> {
-            UtilsWait.waitFor(visibilityOf(issueSuggest));
+            issueSuggest.shouldBe(interactable);
             issueSuggest.click();
-            UtilsWait.waitFor(visibilityOf(issueSelect));
+            issueSelect.shouldBe(interactable);
             issueSelect.click();
         });
         step("Выбор эпика", () -> {
-            UtilsWait.waitFor(visibilityOf(epicSuggest));
+            epicSuggest.shouldBe(interactable);
             epicSuggest.click();
-            UtilsWait.waitFor(visibilityOf(epicSelect));
+            epicSelect.shouldBe(interactable);
             epicSelect.click();
         });
         step("Выбор спринта", () -> {
-            UtilsWait.waitFor(visibilityOf(sprintSuggest));
+            sprintSuggest.shouldBe(interactable);
             sprintSuggest.click();
-            UtilsWait.waitFor(visibilityOf(sprintSelect));
+            sprintSelect.shouldBe(interactable);
             sprintSelect.click();
         });
         step("Подтверждение создания", () -> topicCommit.click());
