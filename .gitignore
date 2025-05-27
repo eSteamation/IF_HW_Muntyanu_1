@@ -5,5 +5,5 @@
 # Кроме
 !src/**
 !pom.xml
-!readme
+!readme.md
 !gitignor
