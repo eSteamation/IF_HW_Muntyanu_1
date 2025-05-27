@@ -1,6 +1,7 @@
 package ru.iFellow.ThirdLesson;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import utils.UtilsWait;
 
 import static com.codeborne.selenide.Selenide.$x;
@@ -23,17 +24,20 @@ public class IssueDetailsPage {
     protected final SelenideElement loaderCreateIssue = $x("//div[@class='aui-spinner spinner']").as("Выход из генератора");
     protected final SelenideElement updateSuccess = $x("//div[contains(@class, 'aui-message-success') and contains(text(), 'был обновлен')]");
 
+    @Step("Поиск задачи {query}")
     public void searchForIssue(String query) {
         UtilsWait.waitFor(visibilityOf(searcherQuery));
         searcherQuery.setValue(query);
         searchCommit.click();
     }
 
+    @Step("Быстрый поиск")
     public void quickSearch(String query) {
         UtilsWait.waitFor(visibilityOf(quickSearchInput));
         quickSearchInput.setValue(query).pressEnter();
     }
 
+    @Step("Проверка статуса и версии")
     public void issueVerify(String expectedStatus, String expectedVersion) {
         assertEquals(expectedStatus, statusCheck.getText());
         if (expectedVersion != null) {
@@ -41,16 +45,19 @@ public class IssueDetailsPage {
         }
     }
 
+    @Step("Ожидание загрузки задач")
     public void loaderIssueWait() {
         UtilsWait.waitFor(visibilityOf(loaderCreateIssue));
         UtilsWait.waitFor(invisibilityOf(loaderCreateIssue));
     }
 
+    @Step("Ожидание загрузки хз чего")
     public void loaderWait() {
         UtilsWait.waitFor(visibilityOf(loader));
         UtilsWait.waitFor(invisibilityOf(loader));
     }
 
+    @Step("Проверка переходов по статусам")
     public void issueStatus() {
         UtilsWait.waitFor(visibilityOf(issueInWork));
         issueInWork.click();
@@ -69,11 +76,13 @@ public class IssueDetailsPage {
         issueCompleted.click();
     }
 
+    @Step("Проверка успешности обновления")
     public void issueUpdate() {
         UtilsWait.waitFor(visibilityOf(updateSuccess));
         UtilsWait.waitFor(invisibilityOf(updateSuccess));
     }
 
+    @Step("Проверка доступности поисковой строки")
     public void assertSearchElements() {
         UtilsWait.waitFor(visibilityOf(searcherQuery));
         UtilsWait.waitFor(visibilityOf(searchCommit));
