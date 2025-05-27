@@ -25,7 +25,6 @@ public class MainTest extends WebHook {
     protected final IssueDetailsPage issueDetailsPage = new IssueDetailsPage();
     protected int initialCount;
     protected int newCount;
-    protected String taskSummary = "HW" + newCount;
 
     @Test
     @DisplayName("Проверка входа в систему")
@@ -76,11 +75,11 @@ public class MainTest extends WebHook {
         step("Создание задачи", () -> {
             issuesPage.issueNew();
             createIssuePage.issueCheck();
-            createIssuePage.issueBasic("TEST-HW1111113");
+            createIssuePage.issueBasic("TEST-HW6");
             issueDetailsPage.loaderIssueWait();
             step("Обновление страницы для обновления счетчика", Selenide::refresh);
             issuesPage.issueLoader();
-            int newCount = issuesPage.issuesCount();
+            newCount = issuesPage.issuesCount();
             step("Проверка того, что количество задач выросло на 1", () -> assertEquals(newCount, (initialCount + 1)));
         });
     }
@@ -107,11 +106,10 @@ public class MainTest extends WebHook {
     void testStepFive() {
         testStepFour();
         step("Создание и проверка задачи", () -> {
-            newCount = issuesPage.issuesCount();
             issuesPage.issueNew();
-            createIssuePage.issueDetailed(taskSummary, "Im a chill little entry");
+            createIssuePage.issueDetailed("HW6" + newCount, "Im a chill little entry");
             issueDetailsPage.loaderIssueWait();
-            issueDetailsPage.quickSearch(taskSummary);
+            issueDetailsPage.quickSearch("HW6" + newCount);
             issueDetailsPage.issueStatus();
             issueDetailsPage.issueUpdate();
             issueDetailsPage.issueVerify("ГОТОВО", null);

@@ -8,7 +8,7 @@ import io.qameta.allure.Step;
 import static com.codeborne.selenide.Condition.interactable;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.logevents.SelenideLogger.step;
+import static io.qameta.allure.Allure.step;
 
 @Feature("Создание задачи")
 public class CreateIssuePage {
@@ -31,7 +31,9 @@ public class CreateIssuePage {
     @Step("Создание базовой задачи с темой '{summary}'")
     public void issueBasic(String summary) {
         step("Проверка видимости обязательных полей", this::issueCheck);
-        step("Ввод темы задачи: " + summary, () -> topicField.setValue(summary));
+        step("Ввод темы задачи: " + summary, () -> {
+            topicField.setValue(summary);
+        });
         step("Нажатие кнопки создать", () -> topicCommit.click());
     }
 
@@ -43,7 +45,7 @@ public class CreateIssuePage {
         step("Ожидание кнопки подтверждения", () -> topicCommit.shouldBe(visible));
     }
 
-    @Step("Детализированное создание задачи c темой формата 'HW + порядковый номер'")
+    @Step("Детализированное создание задачи c темой '{summary}'")
     public void issueDetailed(String summary, String description) {
         issueCheck();
         step("Переход в текстовый формат", () -> modeSelect.click());

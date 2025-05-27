@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class IssueDetailsPage {
@@ -22,66 +23,77 @@ public class IssueDetailsPage {
     protected final SelenideElement loaderCreateIssue = $x("//div[@class='aui-spinner spinner']").as("Выход из генератора");
     protected final SelenideElement updateSuccess = $x("//div[contains(@class, 'aui-message-success') and contains(text(), 'был обновлен')]");
 
-    @Step("Поиск задачи {query}")
     public void searchForIssue(String query) {
-        searcherQuery.shouldBe(interactable);
-        searcherQuery.setValue(query);
-        searchCommit.click();
+        step("Поиск должен быть доступен", () -> searcherQuery.shouldBe(interactable));
+        step("Ищем задачу {query}", () -> {
+            searcherQuery.setValue(query);
+            searchCommit.click();
+        });
     }
 
-    @Step("Быстрый поиск")
     public void quickSearch(String query) {
-        quickSearchInput.shouldBe(interactable);
-        quickSearchInput.setValue(query).pressEnter();
+        step("Быстрый поиск должен быть доступен", () -> quickSearchInput.shouldBe(interactable));
+        step("Ищем задачу {query}", () -> quickSearchInput.setValue(query).pressEnter());
     }
 
-    @Step("Проверка статуса и версии")
     public void issueVerify(String expectedStatus, String expectedVersion) {
-        assertEquals(expectedStatus, statusCheck.getText());
+        step("Проверяем статус задачи '{expected status}'", () -> assertEquals(expectedStatus, statusCheck.getText()));
         if (expectedVersion != null) {
-            assertEquals(expectedVersion, versionCheck.getText());
+            step("Проверяем версию задачи '{expected version}'", () -> assertEquals(expectedVersion, versionCheck.getText()));
         }
     }
 
-    @Step("Ожидание загрузки задач")
     public void loaderIssueWait() {
-        loaderCreateIssue.shouldBe(exist);
-        loaderCreateIssue.shouldNotBe(exist);
+        step("Ожидание загрузки задач", () -> {
+            loaderCreateIssue.shouldBe(exist);
+            loaderCreateIssue.shouldNotBe(exist);
+        });
     }
 
-    @Step("Ожидание загрузки хз чего")
+
     public void loaderWait() {
-        loader.should(exist);
-        loader.shouldNot(exist);
+        step("Ожидание подгрузки элементов", () -> {
+            loader.should(exist);
+            loader.shouldNot(exist);
+        });
     }
 
     @Step("Проверка переходов по статусам")
     public void issueStatus() {
-        issueInWork.shouldBe(interactable);
-        issueInWork.click();
+        step("Перевод в статус 'В работе'", () -> {
+            issueInWork.shouldBe(interactable);
+            issueInWork.click();
+        });
         loaderWait();
         issueUpdate();
-        issueTransition.shouldBe(interactable);
-        issueTransition.click();
-        issueFinished.shouldBe(interactable);
-        issueFinished.click();
-        issueFinishedSubmit.shouldBe(interactable);
-        issueFinishedSubmit.click();
+        step("Перевод в статус 'В процессе'", () -> {
+            issueTransition.shouldBe(interactable);
+            issueTransition.click();
+            issueFinished.shouldBe(interactable);
+            issueFinished.click();
+            issueFinishedSubmit.shouldBe(interactable);
+            issueFinishedSubmit.click();
+        });
         issueUpdate();
-        issueTransition.shouldBe(interactable);
-        issueTransition.click();
-        issueCompleted.shouldBe(interactable);
-        issueCompleted.click();
+        step("Перевод в статус 'Выполнено'", () -> {
+            issueTransition.shouldBe(interactable);
+            issueTransition.click();
+            issueCompleted.shouldBe(interactable);
+            issueCompleted.click();
+        });
     }
 
-    @Step("Проверка успешности обновления")
     public void issueUpdate() {
-        updateSuccess.should(appear);
-        updateSuccess.should(disappear);
+        step("Проверка успешности обновления", () -> {
+            updateSuccess.should(appear);
+            updateSuccess.should(disappear);
+        });
     }
-    @Step("Проверка доступности поисковой строки")
+
     public void assertSearchElements() {
-        searcherQuery.shouldBe(visible);
-        searchCommit.shouldBe(interactable);
+        step("Проверка доступности поисковой строки", () -> {
+            searcherQuery.shouldBe(visible);
+            searchCommit.shouldBe(interactable);
+        });
     }
 }

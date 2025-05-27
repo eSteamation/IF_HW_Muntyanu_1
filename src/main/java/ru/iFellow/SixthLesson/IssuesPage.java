@@ -3,8 +3,7 @@ package ru.iFellow.SixthLesson;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 
-import static com.codeborne.selenide.Condition.exist;
-import static com.codeborne.selenide.Condition.interactable;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
 import static io.qameta.allure.Allure.step;
 
@@ -39,18 +38,22 @@ public class IssuesPage {
     @Step("Ожидание загрузки страницы")
     public void issueLoader() {
         issuesSpinner.should(exist);
-        issuesSpinner.shouldNot(exist);
+        issuesSpinner.should(disappear);
     }
 
     @Step("Посмотреть все задачи и фильтры")
     public void issuesAllNavigate() {
-        taskNew.shouldBe(interactable);
-        issuesAll.click();
+        step("Посмотреть все задачи и фильтры", () -> {
+            taskNew.shouldBe(interactable);
+            issuesAll.click();
+        });
     }
 
-    @Step("Проверка")
+    @Step("Проверка загрузки страницы задач")
     public void issuesAssert() {
-        taskFilter.shouldBe(interactable);
-        taskNew.shouldBe(interactable);
+        step("Проверка загрузки страницы задач", () -> {
+            taskFilter.shouldBe(interactable);
+            taskNew.shouldBe(interactable);
+        });
     }
 }

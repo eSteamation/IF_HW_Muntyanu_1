@@ -15,7 +15,9 @@
 # Пререквизиты
 
 [Maven 3.9.9](https://dlcdn.apache.org/maven/maven-3/3.9.9/binaries/apache-maven-3.9.9-bin.zip)
+
 [JDK 17.0.12](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+
 Необходимо добавить их %_framework_name_%/bin/ в PATH.
 
 # Потенциальные проблемы \ изменения

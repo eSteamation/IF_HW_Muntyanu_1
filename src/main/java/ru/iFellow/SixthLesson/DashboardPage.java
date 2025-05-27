@@ -22,6 +22,6 @@ public class DashboardPage {
 
     @Step("Ожидание загрузки страницы")
     public void projectCheck() {
-        projectList.shouldBe(visible);
+        step("Ожидание загрузки страницы", () -> projectList.shouldBe(visible));
     }
 }
