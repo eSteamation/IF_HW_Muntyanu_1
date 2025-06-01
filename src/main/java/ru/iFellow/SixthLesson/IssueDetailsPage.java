@@ -23,77 +23,82 @@ public class IssueDetailsPage {
     protected final SelenideElement loaderCreateIssue = $x("//div[@class='aui-spinner spinner']").as("Выход из генератора");
     protected final SelenideElement updateSuccess = $x("//div[contains(@class, 'aui-message-success') and contains(text(), 'был обновлен')]");
 
+    @Step("Поиск задачи {query}")
     public void searchForIssue(String query) {
-        step("Поиск должен быть доступен", () -> searcherQuery.shouldBe(interactable));
-        step("Ищем задачу " + query, () -> {
-            searcherQuery.setValue(query);
-            searchCommit.click();
-        });
+        searcherQuery.shouldBe(interactable);
+        searcherQuery.setValue(query);
+        searchCommit.click();
     }
 
+    @Step("Быстрый поиск задачи {query}")
     public void quickSearch(String query) {
-        step("Быстрый поиск должен быть доступен", () -> quickSearchInput.shouldBe(interactable));
-        step("Ищем задачу " + query, () -> quickSearchInput.setValue(query).pressEnter());
+        quickSearchInput.shouldBe(interactable);
+        quickSearchInput.setValue(query).pressEnter();
     }
 
+    @Step("Проверка статуса задачи '{expectedStatus}'")
     public void issueVerify(String expectedStatus, String expectedVersion) {
-        step("Проверяем статус задачи " + expectedStatus, () -> assertEquals(expectedStatus, statusCheck.getText()));
+        assertEquals(expectedStatus, statusCheck.getText());
         if (expectedVersion != null) {
-            step("Проверяем версию задачи " + expectedVersion, () -> assertEquals(expectedVersion, versionCheck.getText()));
+            step("Проверка версии задачи '{expectedVersion}'", () -> assertEquals(expectedVersion, versionCheck.getText()));
         }
     }
 
+    @Step("Ожидание прогрузки задач")
     public void loaderIssueWait() {
-        step("Ожидание загрузки задач", () -> {
-            loaderCreateIssue.shouldBe(exist);
-            loaderCreateIssue.shouldNotBe(exist);
-        });
+        loaderCreateIssue.shouldBe(exist);
+        loaderCreateIssue.shouldNotBe(exist);
     }
 
-
+    @Step("Ожидание прогрузки страницы")
     public void loaderWait() {
-        step("Ожидание подгрузки элементов", () -> {
-            loader.should(exist);
-            loader.shouldNot(exist);
-        });
+        loader.should(exist);
+        loader.shouldNot(exist);
     }
 
     @Step("Проверка переходов по статусам")
     public void issueStatus() {
-        step("Перевод в статус 'В работе'", () -> {
-            issueInWork.shouldBe(interactable);
-            issueInWork.click();
-        });
+        statusInWork();
         loaderWait();
         issueUpdate();
-        step("Перевод в статус 'В процессе'", () -> {
-            issueTransition.shouldBe(interactable);
-            issueTransition.click();
-            issueFinished.shouldBe(interactable);
-            issueFinished.click();
-            issueFinishedSubmit.shouldBe(interactable);
-            issueFinishedSubmit.click();
-        });
+        statusInProgress();
         issueUpdate();
-        step("Перевод в статус 'Выполнено'", () -> {
-            issueTransition.shouldBe(interactable);
-            issueTransition.click();
-            issueCompleted.shouldBe(interactable);
-            issueCompleted.click();
-        });
+        statusFinished();
     }
 
+    @Step("Проверка успешности обновления")
     public void issueUpdate() {
-        step("Проверка успешности обновления", () -> {
-            updateSuccess.should(appear);
-            updateSuccess.should(disappear);
-        });
+        updateSuccess.should(appear);
+        updateSuccess.should(disappear);
     }
 
+    @Step("Проверка доступности поисковой строки")
     public void assertSearchElements() {
-        step("Проверка доступности поисковой строки", () -> {
-            searcherQuery.shouldBe(visible);
-            searchCommit.shouldBe(interactable);
-        });
+        searcherQuery.shouldBe(visible);
+        searchCommit.shouldBe(interactable);
+    }
+
+    @Step("Перевод в статус 'В работе'")
+    public void statusInWork() {
+        issueInWork.shouldBe(interactable);
+        issueInWork.click();
+    }
+
+    @Step("Перевод в статус 'В процессе'")
+    public void statusInProgress() {
+        issueTransition.shouldBe(interactable);
+        issueTransition.click();
+        issueFinished.shouldBe(interactable);
+        issueFinished.click();
+        issueFinishedSubmit.shouldBe(interactable);
+        issueFinishedSubmit.click();
+    }
+
+    @Step("Перевод в статус 'Выполнено'")
+    public void statusFinished() {
+        issueTransition.shouldBe(interactable);
+        issueTransition.click();
+        issueCompleted.shouldBe(interactable);
+        issueCompleted.click();
     }
 }

@@ -5,7 +5,6 @@ import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
-import static io.qameta.allure.Allure.step;
 
 public class IssuesPage {
     protected final SelenideElement taskFilter = $x("//button[contains(@class, 'subnavigator-trigger')]").as("Переключить фильтр");
@@ -14,51 +13,42 @@ public class IssuesPage {
     protected final SelenideElement taskNew = $x("//a[@id='create_link']").as("Генератор задач");
     protected final SelenideElement issuesAll = $x("//div[@id='full-issue-navigator']/child::a").as("Все задачи, навигатор");
     protected final SelenideElement issuesSpinner = $x("//div[@class='loading']").as("Подгрузка фильтра");
-    protected String text;
 
     @Step("Взятие значения счетчика задач")
     public int issuesCount() {
-        step("Взятие значения счетчика задач", () -> {
-            text = taskCounter.getText();
-        });
+        String text = taskCounter.getText();
         return Integer.parseInt(text.split(" из ")[1]);
     }
 
     @Step("Переключение фильтра в режим 'Все задачи'")
     public void issuesShowAll() {
-        step("Проверка видимости переключателя фильтра", () -> taskFilter.shouldBe(interactable));
-        step("Нажатие кнопки 'Переключить фильтр'", () -> taskFilter.click());
-        step("Проверка видимости выбора 'Все задачи'", () -> taskFilterAll.shouldBe(interactable));
-        step("Подтверждение выбора 'Все задачи'", () -> taskFilterAll.click());
+        taskFilter.shouldBe(interactable);
+        taskFilter.click();
+        taskFilterAll.shouldBe(interactable);
+        taskFilterAll.click();
     }
 
     @Step("Создание новой задачи")
     public void issueNew() {
-        step("Проверка видимости генератора задач", () -> taskNew.shouldBe(interactable));
-        step("Переход в создание задачи", () -> taskNew.click());
+        taskNew.shouldBe(interactable);
+        taskNew.click();
     }
 
-    @Step("Ожидание загрузки страницы")
+    @Step("Ожидание загрузки задачи")
     public void issueLoader() {
-        step("Ожидание загрузки страницы", () -> {
-            issuesSpinner.should(exist);
-            issuesSpinner.should(disappear);
-        });
+        issuesSpinner.should(exist);
+        issuesSpinner.should(disappear);
     }
 
     @Step("Посмотреть все задачи и фильтры")
     public void issuesAllNavigate() {
-        step("Посмотреть все задачи и фильтры", () -> {
-            taskNew.shouldBe(interactable);
-            issuesAll.click();
-        });
+        taskNew.shouldBe(interactable);
+        issuesAll.click();
     }
 
     @Step("Проверка загрузки страницы задач")
     public void issuesAssert() {
-        step("Проверка загрузки страницы задач", () -> {
-            taskFilter.shouldBe(interactable);
-            taskNew.shouldBe(interactable);
-        });
+        taskFilter.shouldBe(interactable);
+        taskNew.shouldBe(interactable);
     }
 }

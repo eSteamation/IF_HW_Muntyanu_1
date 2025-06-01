@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import ru.iFellow.SixthLesson.utilites.AllureReport;
+import utils.UtilsConfig;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -16,10 +17,10 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class WebHook {
     @BeforeAll
     public static void setupAllure() {
-        AllureSelenide allureSelenide = new AllureSelenide()
-                .screenshots(true)
-                .savePageSource(true);
-        SelenideLogger.addListener("AllureSelenide", allureSelenide);
+        SelenideLogger.addListener("AllureSelenide",
+                new AllureSelenide()
+                        .screenshots(Boolean.parseBoolean(UtilsConfig.getProperty("screenshots")))
+                        .savePageSource(Boolean.parseBoolean(UtilsConfig.getProperty("savePageSource"))));
     }
 
     @BeforeEach

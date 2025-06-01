@@ -28,60 +28,72 @@ public class CreateIssuePage {
 
     @Step("Создание базовой задачи с темой '{summary}'")
     public void issueBasic(String summary) {
-        step("Проверка видимости обязательных полей", this::issueCheck);
-        step("Ввод темы задачи: " + summary, () -> {
-            topicField.setValue(summary);
-        });
-        step("Нажатие кнопки создать", () -> topicCommit.click());
+        issueCheck();
+        topicField.setValue(summary);
+        topicCommit.click();
     }
 
     @Step("Проверка видимости полей")
     public void issueCheck() {
-        step("Ожидание элемента выбора формата", () -> modeSelect.shouldBe(visible));
-        step("Ожидание поля темы", () -> topicField.shouldBe(visible));
-        step("Ожидание выбора версии", () -> versionSelect.shouldBe(visible));
-        step("Ожидание кнопки подтверждения", () -> topicCommit.shouldBe(visible));
+        modeSelect.shouldBe(visible);
+        topicField.shouldBe(visible);
+        versionSelect.shouldBe(visible);
+        topicCommit.shouldBe(visible);
     }
 
     @Step("Детализированное создание задачи c темой '{summary}'")
     public void issueDetailed(String summary, String description) {
         issueCheck();
-        step("Переход в текстовый формат", () -> modeSelect.click());
-        step("Ввод темы задачи: " + summary, () -> topicField.setValue(summary));
-        step("Ввод описания задачи", () ->
-        {
-            descriptionField.shouldBe(interactable);
-            descriptionField.click();
-            Selenide.switchTo().frame(descriptionField);
-            descriptionInput.setValue(description);
-            Selenide.switchTo().defaultContent();
-        });
-        step("Выбор версии", () -> versionSelect.selectOptionByValue("10001"));
-        step("Добавление тега Bugfix", () -> {
-            tagField.scrollIntoView(true);
-            tagSuggest.shouldBe(interactable);
-            tagSuggest.click();
-            tagSelectBugFix.shouldBe(interactable);
-            tagSelectBugFix.click();
-        });
-        step("Привязка связанной задачи", () -> {
-            issueSuggest.shouldBe(interactable);
-            issueSuggest.click();
-            issueSelect.shouldBe(interactable);
-            issueSelect.click();
-        });
-        step("Выбор эпика", () -> {
-            epicSuggest.shouldBe(interactable);
-            epicSuggest.click();
-            epicSelect.shouldBe(interactable);
-            epicSelect.click();
-        });
-        step("Выбор спринта", () -> {
-            sprintSuggest.shouldBe(interactable);
-            sprintSuggest.click();
-            sprintSelect.shouldBe(interactable);
-            sprintSelect.click();
-        });
+        modeSelect.click();
+        topicField.setValue(summary);
+        descriptionInput(description);
+        versionSelect.selectOptionByValue("10001");
+        selectingTag();
+        selectingRelated();
+        selectingEpic();
+        selectingSprint();
         step("Подтверждение создания", () -> topicCommit.click());
+    }
+
+    @Step("Выбор спринта")
+    public void selectingSprint() {
+        sprintSuggest.shouldBe(interactable);
+        sprintSuggest.click();
+        sprintSelect.shouldBe(interactable);
+        sprintSelect.click();
+    }
+
+    @Step("Выбор эпика")
+    public void selectingEpic() {
+        epicSuggest.shouldBe(interactable);
+        epicSuggest.click();
+        epicSelect.shouldBe(interactable);
+        epicSelect.click();
+    }
+
+    @Step("Выбор связанных задач")
+    public void selectingRelated() {
+        issueSuggest.shouldBe(interactable);
+        issueSuggest.click();
+        issueSelect.shouldBe(interactable);
+        issueSelect.click();
+    }
+
+    @Step("Выбор тега")
+    public void selectingTag() {
+        tagField.scrollIntoView(true);
+        tagSuggest.shouldBe(interactable);
+        tagSuggest.click();
+        tagSelectBugFix.shouldBe(interactable);
+        tagSelectBugFix.click();
+    }
+
+    @Step("Ввод описания {description}")
+    public void descriptionInput(String description) {
+        descriptionField.shouldBe(interactable);
+        descriptionField.click();
+        Selenide.switchTo().frame(descriptionField);
+        descriptionInput.setValue(description);
+        Selenide.switchTo().defaultContent();
     }
 }

@@ -1,7 +1,6 @@
 package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,7 +8,6 @@ import utils.UtilsConfig;
 
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Epic("Тестирование JIRA-проекта")
 @Feature("Управление задачами")
@@ -27,59 +25,43 @@ public class MainTest extends WebHook {
     @Test
     @DisplayName("Проверка входа в систему")
     @Story("Авторизация пользователя")
-    @Description("Тест проверяет успешный вход в систему и переход на главную страницу")
+    @Description("Вход в систему и переход на главную страницу")
     void testStepOne() {
-        step("Ожидание элементов формы входа", loginPage::loginWait);
-        step("Выполнение входа", loginPage::login);
-        step("Проверка успешного входа", () -> {
-            dashboardPage.projectCheck();
-            step("Проверка адресной строки", () -> {
-                String checkUrl = WebDriverRunner.url();
-                assert checkUrl != null;
-                assertTrue(checkUrl.contains("Dashboard"));
-            });
-        });
+        loginPage.loginWait();
+        loginPage.login(UtilsConfig.getProperty("username"), UtilsConfig.getProperty("password"));
+        dashboardPage.projectCheck();
+        dashboardPage.pageVerification("Dashboard");
     }
 
 
     @Test
     @DisplayName("Проверка перехода в проекты")
     @Story("Навигация по проектам")
-    @Description("Тест проверяет переход в раздел проектов")
+    @Description("Переход в раздел проектов {keyword}")
     void testStepTwo() {
         testStepOne();
-        step("Переход в проекты", () -> {
-            dashboardPage.projectNavigate();
-            step("Проверка адресной строки", () -> {
-                String checkUrl = WebDriverRunner.url();
-                assert checkUrl != null;
-                assertTrue(checkUrl.contains("projects/TEST"));
-            });
-        });
+        dashboardPage.projectNavigate();
+        dashboardPage.pageVerification("projects/TEST");
     }
 
     @Test
     @DisplayName("Проверка создания задачи")
     @Story("Управление задачами")
-    @Description("Тест проверяет создание новой задачи и счетчик задач")
+    @Description("Cоздание новой задачи и счетчик задач")
     void testStepThree() {
         testStepTwo();
-        step("Подготовка к созданию задачи", () -> {
-            issuesPage.issuesAssert();
-            issuesPage.issuesShowAll();
-            issuesPage.issueLoader();
-        });
-        step("Создание задачи", () -> {
-            issuesPage.issueNew();
-            createIssuePage.issueCheck();
-            createIssuePage.issueBasic("TEST-HW6");
-            issueDetailsPage.loaderIssueWait();
-            initialCount = issuesPage.issuesCount();
-            step("Обновление страницы для обновления счетчика", Selenide::refresh);
-            issuesPage.issueLoader();
-            newCount = issuesPage.issuesCount();
-            step("Проверка того, что количество задач выросло на 1", () -> assertEquals(newCount, (initialCount + 1)));
-        });
+        issuesPage.issuesAssert();
+        issuesPage.issuesShowAll();
+        issuesPage.issueLoader();
+        issuesPage.issueNew();
+        createIssuePage.issueCheck();
+        createIssuePage.issueBasic("TEST-HW6");
+        issueDetailsPage.loaderIssueWait();
+        initialCount = issuesPage.issuesCount();
+        step("Обновление страницы для обновления счетчика", Selenide::refresh);
+        issuesPage.issueLoader();
+        newCount = issuesPage.issuesCount();
+        step("Проверка того, что количество задач выросло на 1", () -> assertEquals(newCount, (initialCount + 1)));
     }
 
 
@@ -89,12 +71,10 @@ public class MainTest extends WebHook {
     @Description("Тест проверяет версию и статус существующей задачи")
     void testStepFour() {
         testStepThree();
-        step("Поиск и проверка задачи", () -> {
-            issuesPage.issuesAllNavigate();
-            issueDetailsPage.assertSearchElements();
-            issueDetailsPage.searchForIssue(UtilsConfig.getProperty("caseName"));
-            issueDetailsPage.issueVerify("СДЕЛАТЬ", UtilsConfig.getProperty("version"));
-        });
+        issuesPage.issuesAllNavigate();
+        issueDetailsPage.assertSearchElements();
+        issueDetailsPage.searchForIssue(UtilsConfig.getProperty("caseName"));
+        issueDetailsPage.issueVerify("СДЕЛАТЬ", UtilsConfig.getProperty("version"));
     }
 
     @Test
@@ -103,14 +83,12 @@ public class MainTest extends WebHook {
     @Description("Тест проверяет процесс изменения статуса задачи")
     void testStepFive() {
         testStepFour();
-        step("Создание и проверка задачи", () -> {
-            issuesPage.issueNew();
-            createIssuePage.issueDetailed("HW6" + newCount, "Im a chill little entry");
-            issueDetailsPage.loaderIssueWait();
-            issueDetailsPage.quickSearch("HW6" + newCount);
-            issueDetailsPage.issueStatus();
-            issueDetailsPage.issueUpdate();
-            issueDetailsPage.issueVerify("ГОТОВО", null);
-        });
+        issuesPage.issueNew();
+        createIssuePage.issueDetailed("HW6" + newCount, "Im a chill little entry");
+        issueDetailsPage.loaderIssueWait();
+        issueDetailsPage.quickSearch("HW6" + newCount);
+        issueDetailsPage.issueStatus();
+        issueDetailsPage.issueUpdate();
+        issueDetailsPage.issueVerify("ГОТОВО", null);
     }
 }

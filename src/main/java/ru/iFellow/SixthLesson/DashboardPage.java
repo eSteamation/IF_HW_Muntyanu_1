@@ -1,11 +1,12 @@
 package ru.iFellow.SixthLesson;
 
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$x;
-import static io.qameta.allure.Allure.step;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DashboardPage {
     protected final SelenideElement projectList = $x("//a[@href='/browse/TEST']").as("Проекты");
@@ -14,12 +15,19 @@ public class DashboardPage {
     @Step("Переход в проекты -> Test (TEST)")
     public void projectNavigate() {
         projectCheck();
-        step("Нажатие кнопки 'Проекты'", () -> projectList.click());
-        step("Нажатие кнопки 'Test (TEST)'", () -> projectsTest.click());
+        projectList.click();
+        projectsTest.click();
     }
 
     @Step("Ожидание загрузки страницы")
     public void projectCheck() {
-        step("Ожидание загрузки страницы", () -> projectList.shouldBe(visible));
+        projectList.shouldBe(visible);
+    }
+
+    @Step("Проверка местонахождения по ключевому слову '{keyword}'")
+    public void pageVerification(String keyword) {
+        String checkUrl = WebDriverRunner.url();
+        assert checkUrl != null;
+        assertTrue(checkUrl.contains(keyword));
     }
 }
