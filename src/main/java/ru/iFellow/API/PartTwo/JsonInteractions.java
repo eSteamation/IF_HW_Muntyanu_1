@@ -1,8 +1,9 @@
-package ru.iFellow.FifthLesson.PartTwo;
+package ru.iFellow.API.PartTwo;
 
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import ru.iFellow.API.PartOne.Utils.ConfigReader;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -24,8 +25,8 @@ public class JsonInteractions {
     }
 
     public void setup() {
-        RestAssured.baseURI = utils.ConfigReader.getProperty("API_JSON");
-        API_KEY = utils.ConfigReader.getProperty("API_KEY");
+        RestAssured.baseURI = ConfigReader.getProperty("API_JSON");
+        API_KEY = ConfigReader.getProperty("API_KEY");
     }
 
     public void jsonModifier(String name, String job) {

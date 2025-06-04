@@ -1,4 +1,4 @@
-package utils;
+package ru.iFellow.API.PartOne.Utils;
 
 import org.mockito.Mockito;
 

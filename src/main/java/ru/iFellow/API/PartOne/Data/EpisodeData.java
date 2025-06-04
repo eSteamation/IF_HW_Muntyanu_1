@@ -1,4 +1,4 @@
-package ru.iFellow.FifthLesson.PartOne.Data;
+package ru.iFellow.API.PartOne.Data;
 
 import groovy.util.logging.Slf4j;
 import io.restassured.RestAssured;
@@ -14,11 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Slf4j
 public class EpisodeData {
     private static final String API_URL = "https://rickandmortyapi.com/api";
-    private Scanner scanner;
+    private static final Logger logger = LoggerFactory.getLogger(EpisodeData.class);
     private String episodeInput;
     private List<String> episodes;
+    private final Scanner scanner;
     private JsonPath lastEpisodeData;
-    private static final Logger logger = LoggerFactory.getLogger(EpisodeData.class);
+
 
     public EpisodeData(Scanner scanner) {
         this.scanner = scanner;
@@ -48,20 +49,15 @@ public class EpisodeData {
         this.episodes = characterResponse.getList("results[0].episode");
     }
 
-    public void getLastEpisodeData() {
+    public JsonPath getLastEpisodeData() {
         String lastEpisodeUrl = episodes.get(episodes.size() - 1);
-        this.lastEpisodeData = RestAssured.given()
+        lastEpisodeData = RestAssured.given()
                 .get(lastEpisodeUrl)
                 .then()
                 .statusCode(200)
                 .extract()
                 .jsonPath();
-    }
-
-    public void logLastEpisodeInfo() {
-        logger.info("Last episode with selected character");
-        logger.info("Episode name: {}", lastEpisodeData.getString("name"));
-        logger.info("Episode code: {}", lastEpisodeData.getString("episode"));
+        return lastEpisodeData;
     }
 
     public void episodeVerify() {

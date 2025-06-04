@@ -1,0 +1,9 @@
+# Игнорировать всё
+*
+.idea
+
+# Кроме
+!src/**
+!pom.xml
+!readme.md
+!gitignor

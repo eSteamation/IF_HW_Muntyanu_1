@@ -1,4 +1,4 @@
-package ru.iFellow.FifthLesson.PartOne.Utils;
+package ru.iFellow.API.PartOne.Utils;
 
 public enum ComparisonResult {
     EQUAL,

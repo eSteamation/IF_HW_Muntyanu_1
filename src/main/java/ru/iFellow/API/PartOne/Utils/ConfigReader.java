@@ -1,4 +1,4 @@
-package utils;
+package ru.iFellow.API.PartOne.Utils;
 
 import java.io.InputStream;
 import java.util.Properties;
