@@ -4,17 +4,15 @@ import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
-import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.iFellow.API.PartOne.Data.CharacterData;
 import ru.iFellow.API.PartOne.Data.CharacterParameters;
 import ru.iFellow.API.PartOne.Data.EpisodeData;
-import ru.iFellow.API.PartOne.Utils.ComparisonResult;
-import ru.iFellow.API.PartOne.Utils.ConfigReader;
-import ru.iFellow.API.PartOne.Utils.MockScanner;
-import ru.iFellow.API.PartOne.Utils.SharedContext;
+import ru.iFellow.API.Utils.ComparisonResult;
+import ru.iFellow.API.Utils.MockScanner;
+import ru.iFellow.API.Utils.SharedContext;
 
 import java.util.Scanner;
 
@@ -30,7 +28,6 @@ public class CharacterStep extends CharacterData {
 
     @Дано("Выбрали персонажа {string} для сбора информации")
     public void characterInput(String characterName) {
-        RestAssured.baseURI = ConfigReader.getProperty("API_RNM");
         Scanner mockScanner = MockScanner.createMockScanner(characterName);
         characterData = new CharacterData(mockScanner);
         characterData.nameRequest();

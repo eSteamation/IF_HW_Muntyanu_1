@@ -38,17 +38,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.jupiter.version}</version>
+      <version>5.13.0-M2</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.jupiter.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>1.10.2</version>
     </dependency>
     <dependency>
       <groupId>org.junit.platform</groupId>
@@ -99,20 +95,9 @@
       <version>${cucumber.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-junit</artifactId>
-      <version>${cucumber.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.aeonbits.owner</groupId>
       <artifactId>owner</artifactId>
       <version>1.0.12</version>
-    </dependency>
-    <dependency>
-      <groupId>io.qameta.allure</groupId>
-      <artifactId>allure-cucumber-jvm</artifactId>
-      <version>2.20.1</version>
     </dependency>
     <dependency>
       <groupId>io.rest-assured</groupId>
@@ -135,6 +120,22 @@
       <version>${cucumber.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-cucumber7-jvm</artifactId>
+      <version>2.29.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.qameta.allure</groupId>
+      <artifactId>allure-rest-assured</artifactId>
+      <version>2.29.1</version>
+    </dependency>
+    <!--    <dependency>-->
+    <!--      <groupId>io.cucumber</groupId>-->
+    <!--      <artifactId>cucumber-junit</artifactId>-->
+    <!--      <version>7.20.1</version>-->
+    <!--      <scope>test</scope>-->
+    <!--    </dependency>-->
   </dependencies>
 
   <build>
@@ -159,6 +160,7 @@
         <version>3.5.3</version>
         <configuration>
           <argLine>
+            -Dfile.encoding=UTF-8
             -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
           </argLine>
           <parallel>all</parallel>

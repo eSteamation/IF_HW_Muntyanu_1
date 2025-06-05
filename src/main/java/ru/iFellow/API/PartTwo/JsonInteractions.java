@@ -3,7 +3,7 @@ package ru.iFellow.API.PartTwo;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import ru.iFellow.API.PartOne.Utils.ConfigReader;
+import ru.iFellow.API.Utils.SharedContext;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -15,18 +15,12 @@ public class JsonInteractions {
     protected Map<String, Object> requestBody;
     protected JsonPath jsonPath;
     protected Response response;
-    private String API_KEY;
 
     public void jsonImport(String jsonName) {
         InputStream jsonStream = getClass().getClassLoader()
                 .getResourceAsStream(jsonName);
         jsonPath = new JsonPath(jsonStream);
         assertNotNull(jsonStream);
-    }
-
-    public void setup() {
-        RestAssured.baseURI = ConfigReader.getProperty("API_JSON");
-        API_KEY = ConfigReader.getProperty("API_KEY");
     }
 
     public void jsonModifier(String name, String job) {
@@ -36,9 +30,8 @@ public class JsonInteractions {
     }
 
     public void jsonRequest(String expectedCode) {
-        setup();
         response = RestAssured.given()
-                .header("X-API-Key", API_KEY)
+                .header("X-API-Key", SharedContext.API_KEY)
                 .contentType("application/json")
                 .body(requestBody)
                 .when()

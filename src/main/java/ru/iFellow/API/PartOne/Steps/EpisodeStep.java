@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.iFellow.API.PartOne.Data.CharacterData;
 import ru.iFellow.API.PartOne.Data.EpisodeData;
-import ru.iFellow.API.PartOne.Utils.MockScanner;
-import ru.iFellow.API.PartOne.Utils.SharedContext;
+import ru.iFellow.API.Utils.MockScanner;
+import ru.iFellow.API.Utils.SharedContext;
 
 import java.util.Scanner;
 

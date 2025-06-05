@@ -7,8 +7,7 @@ import io.restassured.path.json.JsonPath;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.iFellow.API.PartOne.Utils.ComparisonResult;
-import ru.iFellow.API.PartOne.Utils.ConfigReader;
+import ru.iFellow.API.Utils.ComparisonResult;
 
 import java.util.List;
 import java.util.Scanner;
@@ -34,10 +33,6 @@ public class CharacterData {
         this.scanner = scanner;
     }
 
-    public void setup() {
-        RestAssured.baseURI = ConfigReader.getProperty("API_RNM");
-    }
-
     public static ComparisonResult characterComparatorTest(Object obj1, Object obj2) {
         try {
             boolean equal = Objects.equal(obj1, obj2);
@@ -48,7 +43,6 @@ public class CharacterData {
     }
 
     public void nameRequest() {
-        setup();
         logger.info("Asks for the full name of the character");
         this.nameInput = scanner.nextLine();
         logger.info("Searching for the character: {}", nameInput);
