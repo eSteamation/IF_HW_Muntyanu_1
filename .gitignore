@@ -1,0 +1,10 @@
+# Игнорировать всё
+*
+.idea
+
+# Исключения:
+!.gitignore
+!pom.xml
+!readme.md
+!src/
+!src/**
