@@ -1,10 +1,11 @@
-package ru.iFellow.SixthLesson;
+package ru.iFellow.UI;
 
+import Utilites.UtilsConfig;
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import utils.UtilsConfig;
+import ru.iFellow.UI.Hooks.WebHook;
 
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertEquals;

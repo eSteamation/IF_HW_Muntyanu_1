@@ -2,8 +2,9 @@
 *
 .idea
 
-# Кроме
-!src/**
+# Исключения:
+!.gitignore
 !pom.xml
 !readme.md
-!gitignor
+!src/
+!src/**

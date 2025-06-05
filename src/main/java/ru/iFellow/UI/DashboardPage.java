@@ -1,4 +1,4 @@
-package ru.iFellow.SixthLesson;
+package ru.iFellow.UI;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;

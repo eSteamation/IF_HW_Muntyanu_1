@@ -1,15 +1,13 @@
-package ru.iFellow.SixthLesson;
+package ru.iFellow.UI.Hooks;
 
+import Utilites.UtilsConfig;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import ru.iFellow.SixthLesson.utilites.AllureReport;
-import utils.UtilsConfig;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -29,13 +27,6 @@ public class WebHook {
         open("");
         getWebDriver().manage().window().maximize();
         Configuration.timeout = 10000;
-    }
-
-    @AfterAll
-    static void generateAllureReport() {
-        AllureReport.generateReport();
-        AllureReport.openAllureReport();
-        SelenideLogger.removeAllListeners();
     }
 
     @AfterEach
