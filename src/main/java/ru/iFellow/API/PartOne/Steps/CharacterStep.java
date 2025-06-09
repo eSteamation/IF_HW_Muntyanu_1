@@ -5,8 +5,6 @@ import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.restassured.path.json.JsonPath;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.iFellow.API.PartOne.Data.CharacterData;
 import ru.iFellow.API.PartOne.Data.CharacterParameters;
 import ru.iFellow.API.PartOne.Data.EpisodeData;
@@ -14,12 +12,14 @@ import ru.iFellow.API.Utils.ComparisonResult;
 import ru.iFellow.API.Utils.MockScanner;
 import ru.iFellow.API.Utils.SharedContext;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
+import static io.qameta.allure.Allure.addAttachment;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CharacterStep extends CharacterData {
-    private static final Logger logger = LoggerFactory.getLogger(CharacterStep.class);
     protected CharacterParameters firstCharacter = null;
     protected CharacterParameters secondCharacter = null;
     protected EpisodeData episodeData = new EpisodeData();
@@ -54,14 +54,11 @@ public class CharacterStep extends CharacterData {
         episodeData.episodeVerify();
     }
 
-    @И("Проверяем и логгируем информацию об эпизоде")
+    @И("Проверяем информацию об эпизоде")
     public void episodeVerification() {
         JsonPath lastEpisode = episodeData.getLastEpisodeData();
         assertNotNull(lastEpisode.getString("name"));
         assertNotNull(lastEpisode.getString("episode"));
-        logger.info("Последний эпизод с выбранным персонажем:");
-        logger.info("Название эпизода: {}", lastEpisode.getString("name"));
-        logger.info("Код эпизода: {}", lastEpisode.getString("episode"));
     }
 
     @И("Запоминаем параметры 'Местонахождение' и 'Вид' для сравнения")
@@ -86,10 +83,9 @@ public class CharacterStep extends CharacterData {
     public void comparator() {
         ComparisonResult resultLocation = characterComparatorTest(firstCharacter.getLocation(), secondCharacter.getLocation());
         ComparisonResult resultSpecies = characterComparatorTest(firstCharacter.getSpecies(), secondCharacter.getSpecies());
-        logger.info("\nИмя первого персонажа: {}\nИмя второго персонажа: {}", firstCharacter.getName(), secondCharacter.getName());
-        logger.info("\nРезультат сравнения локаций: {}", resultLocation);
-        logger.info("\nРезультат сравнения видов: {}", resultSpecies);
-        logger.info("\nЛокация первого персонажа: {}\nЛокация второго персонажа: {}", firstCharacter.getLocation(), secondCharacter.getLocation());
-        logger.info("\nВид первого персонажа: {}\nВид второго персонажа: {}", firstCharacter.getSpecies(), secondCharacter.getSpecies());
+        String logData = "Персонаж 1:\n" + " - Раса: " + firstCharacter.getSpecies() + "\n" + " - Локация: " + firstCharacter.getLocation() + "\n\n" +
+                "Персонаж 2:\n" + " - Раса: " + secondCharacter.getSpecies() + "\n" + " - Локация: " + secondCharacter.getLocation() + "\n\n" +
+                "Результат сравнения:\n" + " - Вид: " + resultSpecies + "\n" + " - Местонахождение: " + resultLocation;
+        addAttachment("Результаты сравнения персонажей", new ByteArrayInputStream(logData.getBytes(StandardCharsets.UTF_8)));
     }
 }

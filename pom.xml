@@ -13,18 +13,15 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <!-- Общие настройки -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <selenide.logger.enabled>false</selenide.logger.enabled>
-
-    <!-- Версии зависимостей -->
     <lombok.version>1.18.38</lombok.version>
     <selenium.version>4.33.0</selenium.version>
     <selenide.version>7.9.2</selenide.version>
     <logback.version>1.5.18</logback.version>
     <junit.jupiter.version>5.10.2</junit.jupiter.version>
     <cucumber.version>7.20.1</cucumber.version>
-    <allure.version>2.24.0</allure.version>
+    <allure.version>2.29.1</allure.version>
     <aspectj.version>1.9.24</aspectj.version>
   </properties>
 
@@ -123,19 +120,13 @@
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-cucumber7-jvm</artifactId>
-      <version>2.29.1</version>
+      <version>${allure.version}</version>
     </dependency>
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-rest-assured</artifactId>
-      <version>2.29.1</version>
+      <version>${allure.version}</version>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>io.cucumber</groupId>-->
-    <!--      <artifactId>cucumber-junit</artifactId>-->
-    <!--      <version>7.20.1</version>-->
-    <!--      <scope>test</scope>-->
-    <!--    </dependency>-->
   </dependencies>
 
   <build>

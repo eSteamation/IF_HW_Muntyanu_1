@@ -43,9 +43,7 @@ public class CharacterData {
     }
 
     public void nameRequest() {
-        logger.info("Asks for the full name of the character");
         this.nameInput = scanner.nextLine();
-        logger.info("Searching for the character: {}", nameInput);
     }
 
     public JsonPath currentCharacterData() {
